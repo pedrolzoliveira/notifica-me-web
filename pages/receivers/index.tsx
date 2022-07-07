@@ -3,6 +3,7 @@ import { BsWhatsapp } from 'react-icons/bs';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 import { useReceivers } from '../../hooks/receivers-hooks';
+import { Table, THead, TBody, Td, Th, Tr } from '../../components/Table';
 
 const Receivers = () => {
 
@@ -18,29 +19,28 @@ const Receivers = () => {
 
     return (
         <div className="p-4 w-full">
-            <table className='w-full shadow'>
-                <thead className="bg-gray-50 border-b-2 border-gray-200">
+            <Table >
+                <THead>
                     <tr>
-                        <th className='w-36 p-3 text-sm font-semibold tracking-wide text-left'>Nome</th>
-                        <th className='w-36 p-3 text-sm font-semibold tracking-wide text-left'>Contato</th>
+                        <Th className='w-36'>Nome</Th>
+                        <Th className='w-36'>Contato</Th>
                     </tr>
-                </thead>
-                <tbody>
+                </THead>
+                <TBody>
                     {
                         receivers?.map(receiver => {
                             return (
-                                <tr key={receiver.id} className="odd:bg-white even:bg-gray-50">
-                                    <td className="p-3 text-sm text-gray-700">{receiver.messenger}</td>
-                                    <td className="p-3 text-sm text-gray-700">{receiver.number}</td>
-                                </tr>
+                                <Tr key={receiver.id} >
+                                    <Td>{receiver.messenger}</Td>
+                                    <Td>{receiver.number}</Td>
+                                </Tr>
                             )
                         })
                     }
                     
                     
-                </tbody>
-            </table>
-        
+                </TBody>
+            </Table>
         </div>
     )
 }

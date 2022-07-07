@@ -1,6 +1,8 @@
 import { useEvents } from "../../hooks/events-hooks";
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
+import { Table, TBody, THead, Td, Th, Tr } from "../../components/Table";
+
 const Events = () => {
 
     const { data: events, isLoading } = useEvents();
@@ -16,30 +18,28 @@ const Events = () => {
 
     return (
         <div className="p-4 w-full">
-            <table className='w-full shadow'>
-                <thead className="bg-gray-50 border-b-2 border-gray-200">
+            <Table>
+                <THead>
                     <tr>
-                        <th className='w-36 p-3 text-sm font-semibold tracking-wide text-left'>Código</th>
-                        <th className='p-3 text-sm font-semibold tracking-wide text-left'>Texto</th>
-                        <th className='w-48 p-3 text-sm font-semibold tracking-wide text-left'>Data</th>
+                        <Th className='w-36'>Código</Th>
+                        <Th>Texto</Th>
+                        <Th className='w-48'>Data</Th>
                     </tr>
-                </thead>
-                <tbody>
+                </THead>
+                <TBody>
                     {
                         events?.map(event => {
                             return (
-                                <tr key={event.id} className="odd:bg-white even:bg-gray-50">
-                                    <td className="p-3 text-sm text-gray-700">{event.code}</td>
-                                    <td className="p-3 text-sm text-gray-700">{event.text}</td>
-                                    <td className="p-3 text-sm text-gray-700">{event.createdAt}</td>
-                                </tr>
+                                <Tr key={event.id} >
+                                    <Td>{event.code}</Td>
+                                    <Td>{event.text}</Td>
+                                    <Td>{event.createdAt}</Td>
+                                </Tr>
                             )
                         })
-                    }
-                    
-                    
-                </tbody>
-            </table>
+                    } 
+                </TBody>
+            </Table>
         
         </div>
     )

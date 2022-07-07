@@ -2,6 +2,8 @@ import { useNotifications } from "../../hooks/notifications-hooks";
 
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
+import { Table, TBody, THead, Td, Th, Tr } from "../../components/Table";
+
 const Notifications = () => {
 
     const { data: notifications, isLoading } = useNotifications();
@@ -14,37 +16,39 @@ const Notifications = () => {
         )
     } 
 
+    
+
     return (
         <div className="p-4 w-full">
-            <table className='w-full shadow'>
-                <thead className="bg-gray-50 border-b-2 border-gray-200">
+            <Table>
+                <THead>
                     <tr>
-                        <th className='w-36 p-3 text-sm font-semibold tracking-wide text-left'>Data</th>
-                        <th className='w-36 p-3 text-sm font-semibold tracking-wide text-left'>Evento</th>
-                        <th className='p-3 text-sm font-semibold tracking-wide text-left'>Texto</th>
-                        <th className='w-48 p-3 text-sm font-semibold tracking-wide text-left'>Recebedor</th>
+                        <Th className="w-36">Data</Th>
+                        <Th className="w-36">Evento</Th>
+                        <Th>Texto</Th>
+                        <Th className="w-48">Recebedor</Th>
                     </tr>
-                </thead>
-                <tbody>
+                </THead>
+                <TBody>
                     {
                         notifications?.map(notification => {
                             return (
-                                <tr key={notification.createdAt} className="odd:bg-white even:bg-gray-50">
-                                    <td className="p-3 text-sm text-gray-700">{notification.createdAt}</td>
-                                    <td className="p-3 text-sm text-gray-700">{notification.event.code}</td>
-                                    <td className="p-3 text-sm text-gray-700">{notification.event.text}</td>
-                                    <td className="p-3 text-sm text-gray-700">{notification.receiver.number}</td>
-                                </tr>
+                                <Tr key={notification.createdAt} >
+                                    <Td>{notification.createdAt}</Td>
+                                    <Td>{notification.event.code}</Td>
+                                    <Td>{notification.event.text}</Td>
+                                    <Td>{notification.receiver.number}</Td>
+                                </Tr>
                             )
                         })
                     }
-                    
-                    
-                </tbody>
-            </table>
+                </TBody>
+            </Table>
             
         </div>
     )
+
+    
 }
 
 export default Notifications;
