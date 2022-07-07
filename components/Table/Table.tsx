@@ -6,7 +6,7 @@ type TableProps = {
 
 export const Table = ({ children }: TableProps) => {
     return (
-        <table className='w-full shadow'>
+        <table className='w-full shadow border'>
             {children}
         </table>
     )
