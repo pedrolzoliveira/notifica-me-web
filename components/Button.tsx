@@ -1,6 +1,7 @@
+import { ReactNode } from "react"
 
 type ButtonProps = {
-    children: JSX.Element
+    children: ReactNode
 }
 
 export const Button = ({ children } : ButtonProps) => {
