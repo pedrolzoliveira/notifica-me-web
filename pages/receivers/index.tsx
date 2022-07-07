@@ -24,6 +24,7 @@ const Receivers = () => {
                     <tr>
                         <Th className='w-36'>Nome</Th>
                         <Th className='w-36'>Contato</Th>
+                        <Th className='w-36'>Eventos Registrados</Th>
                     </tr>
                 </THead>
                 <TBody>
@@ -33,6 +34,7 @@ const Receivers = () => {
                                 <Tr key={receiver.id} >
                                     <Td>{receiver.messenger}</Td>
                                     <Td>{receiver.number}</Td>
+                                    <Td>{receiver.registeredEvents.map(registeredEvent => registeredEvent.eventCode)}</Td>
                                 </Tr>
                             )
                         })

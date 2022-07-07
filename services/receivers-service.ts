@@ -8,6 +8,11 @@ export async function findAll() {
             customerId: string;
             number: string;
             messenger: "whatsapp" | "telegram" | "sms";
+            registeredEvents: {
+                id: string;
+                eventCode: string;
+                receiverId: string;
+            }[]
         }[]
     }>('/receivers');
     return response.data.receivers;
