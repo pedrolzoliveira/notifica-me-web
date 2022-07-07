@@ -10,29 +10,29 @@ export const SideBar = () => {
     const [] = useState();
 
     return (
-        <div className="sticky top-0 left-0 h-screen min-w-[210px] flex flex-col p-4 space-y-4 border-r">
+        <div className="sticky top-0 left-0 h-screen sm:min-w-[210px] flex flex-col p-4 space-y-4 border-r">
             <OptionSideBar href=''>
                 <FiHome/>
-                <p>Home</p> 
+                <p className='hidden sm:block'>Home</p> 
             </OptionSideBar>
             <OptionSideBar href='services'>
                 <BsFillGridFill/>
-                <p>Planos</p>
+                <p className='hidden sm:block'>Planos</p>
             </OptionSideBar>
 
             <OptionSideBar href='notifications'>
                 <BiMessageDetail/>
-                <p>Notificações</p>
+                <p className="hidden sm:block">Notificações</p>
             </OptionSideBar>
             <OptionSideBar href='events'>
                 <BsFillBellFill/>
-                <p>Eventos</p>
+                <p className='hidden sm:block'>Eventos</p>
         
             </OptionSideBar>
             <OptionSideBar href='receivers'>
                 
                 <BsFillPeopleFill/>
-                <p>Recebedores</p>
+                <p className='hidden sm:block'>Recebedores</p>
                 
             </OptionSideBar>
             
