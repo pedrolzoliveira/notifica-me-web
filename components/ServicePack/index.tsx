@@ -13,7 +13,7 @@ type ServicePackProps = {
 
 export const ServicePack = ({ data }: ServicePackProps) => {
     return (
-        <div className='transition-all border rounded p-4 hover:ring-1 hover:bg-blue-50 cursor-pointer flex flex-col justify-between'>
+        <div className='transition-all border rounded p-4 hover:ring-1 hover:bg-blue-50 cursor-pointer flex flex-col justify-between shadow'>
           <div>
             <h1 className='text-2xl mb-4'>{data.title}</h1>
             <p>{data.text}</p>
