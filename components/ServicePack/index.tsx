@@ -36,7 +36,7 @@ export const ServicePack = ({ data }: ServicePackProps) => {
           </div>
           <div className='flex justify-evenly items-center py-2'>
             <p className='text-xl text-gray-700 '>{formataReal(data.price)} /mês</p>
-            <Button><>Ver Detalhes</></Button>
+            <Button>Ver Detalhes</Button>
           </div>
         </div>
     )

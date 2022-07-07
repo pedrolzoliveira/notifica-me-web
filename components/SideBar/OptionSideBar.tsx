@@ -1,8 +1,8 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import { useRouter } from 'next/router';
 
 type OptionSideBarProps = {
-    children: JSX.Element,
+    children: ReactNode,
     href: string;
 }
 
