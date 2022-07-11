@@ -1,13 +1,9 @@
-import { ReactNode } from "react"
+import { DetailedHTMLProps, ButtonHTMLAttributes } from "react"
 
-type ButtonProps = {
-    children: ReactNode
-}
-
-export const Button = ({ children } : ButtonProps) => {
+export const Button = (props : DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) => {
     return (
-        <button className='transition-all bg-blue-500 hover:ring-1 px-4 py-2 rounded text-white'>
-            { children }
+        <button {...props} className={`transition-all bg-blue-500 hover:ring-1 px-4 py-2 rounded text-white ${props.className ? props.className : ''}`}>
+            { props.children }
         </button>
     )
 }

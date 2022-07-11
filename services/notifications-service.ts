@@ -11,6 +11,7 @@ export async function findAll() {
             },
             receiver: {
                 id: string;
+                name: string;
                 customerId: string;
                 number: string;
                 messenger: "whatsapp" | "telegram" | "sms"

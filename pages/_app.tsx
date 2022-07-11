@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 
 import type { AppProps } from 'next/app'
-import { SideBar } from '../components/SideBar';
+import { SideBar } from '../components/side-bar';
 
 import { QueryClientProvider } from 'react-query';
 import { queryClient } from '../queryClient';

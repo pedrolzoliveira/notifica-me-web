@@ -1,11 +1,12 @@
 import { ReactNode } from "react"
 
 type TBodyProps = {
-    children: ReactNode
+    children: ReactNode;
+    className?: string;
 }
-export const TBody = ({ children } : TBodyProps) => {
+export const TBody = ({ children, className } : TBodyProps) => {
     return (
-        <tbody>
+        <tbody className={className}>
             { children }
         </tbody>
     )

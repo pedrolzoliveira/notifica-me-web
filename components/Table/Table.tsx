@@ -1,12 +1,13 @@
 import { ReactNode } from "react"
 
 type TableProps = {
-    children: ReactNode
+    children: ReactNode;
+    className?: string;
 }
 
-export const Table = ({ children }: TableProps) => {
+export const Table = ({ children, className }: TableProps) => {
     return (
-        <table className='w-full shadow border'>
+        <table className={`w-full shadow border ${className}`}>
             {children}
         </table>
     )

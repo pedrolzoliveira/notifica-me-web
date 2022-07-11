@@ -2,7 +2,7 @@ import { useNotifications } from "../../hooks/notifications-hooks";
 
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
-import { Table, TBody, THead, Td, Th, Tr } from "../../components/Table";
+import { Table, TBody, THead, Td, Th, Tr } from "../../components/table";
 
 const Notifications = () => {
 
@@ -19,9 +19,10 @@ const Notifications = () => {
     
 
     return (
-        <div className="p-4 w-full">
+        <div className="p-4 w-full h-full space-y-4">
+            <h1 className="font-bold text-lg">Notificações</h1>
             <Table>
-                <THead>
+                <THead className="sticky top-0 left-0">
                     <tr>
                         <Th className="w-36">Evento</Th>
                         <Th>Texto</Th>
@@ -29,14 +30,14 @@ const Notifications = () => {
                         <Th className="w-48">Data</Th>
                     </tr>
                 </THead>
-                <TBody>
+                <TBody className="">
                     {
                         notifications?.map(notification => {
                             return (
                                 <Tr key={notification.createdAt} >
                                     <Td>{notification.event.code}</Td>
                                     <Td>{notification.event.text}</Td>
-                                    <Td>{notification.receiver.number}</Td>
+                                    <Td>{notification.receiver.name}</Td>
                                     <Td>{new Date(notification.createdAt).toLocaleString()}</Td>
                                 </Tr>
                             )
@@ -44,6 +45,7 @@ const Notifications = () => {
                     }
                 </TBody>
             </Table>
+            
             
         </div>
     )

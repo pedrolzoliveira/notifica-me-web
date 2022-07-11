@@ -1,12 +1,13 @@
 import { ReactNode } from "react"
 
 type TdProps = {
-    children: ReactNode
+    children: ReactNode,
+    className?: string;
 }
 
-export const Td = ({ children }: TdProps) => {
+export const Td = ({ children, className }: TdProps) => {
     return (
-        <td className="p-3 text-sm text-gray-700">
+        <td className={`p-3 text-sm text-gray-700 whitespace-nowrap ${className}`}>
             { children }
         </td>
     )

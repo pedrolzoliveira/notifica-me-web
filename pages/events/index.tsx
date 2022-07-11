@@ -1,11 +1,14 @@
 import { useEvents } from "../../hooks/events-hooks";
+import { useEventTypes } from "../../hooks/event-types-hooks";
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
-import { Table, TBody, THead, Td, Th, Tr } from "../../components/Table";
+import { Table, TBody, THead, Td, Th, Tr } from "../../components/table";
+import { Button } from "../../components/Button";
 
 const Events = () => {
 
-    const { data: events, isLoading } = useEvents();
+    const { data: eventTypes, isLoading } = useEventTypes();
+    const { data: events } = useEvents();
 
 
     if (isLoading) {
@@ -15,6 +18,39 @@ const Events = () => {
             </div>
         )
     } 
+
+    return (
+        <div className="p-4 w-full space-y-4">
+            <div className="flex justify-between">
+                <h1 className="font-bold text-lg">Eventos</h1>
+                <Button onClick={() => {alert("o")}}>Adicionar</Button>
+            </div>
+            <Table>
+                <THead>
+                    <tr>
+                        <Th className='w-36'>code</Th>
+                        <Th className='w-44'>Nome</Th>
+                        <Th>Descrição</Th>
+                        <Th className='w-48'>Criado em</Th>
+                    </tr>
+                </THead>
+                <TBody>
+                    {
+                        eventTypes?.map(eventType => {
+                            return (
+                                <Tr key={eventType.code}>
+                                    <Td>{eventType.code}</Td>
+                                    <Td>{eventType.name}</Td>
+                                    <Td>{eventType.description}</Td>
+                                    <Td>{new Date(eventType.createdAt).toLocaleString()}</Td>
+                                </Tr>
+                            )
+                        })
+                    }
+                </TBody>
+            </Table>
+        </div>
+    )
 
     return (
         <div className="p-4 w-full">

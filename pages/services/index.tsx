@@ -1,4 +1,4 @@
-import { ServicePack } from "../../components/ServicePack";
+import { ServicePack } from "../../components/service-pack";
 
 const Services = () => {
     return (
