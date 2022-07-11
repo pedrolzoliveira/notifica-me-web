@@ -56,9 +56,13 @@ const Receivers = () => {
                                             {receiver.number}
                                         </span>
                                     </Td>
-                                    <Td>{receiver.registeredEvents.map(registeredEvent => registeredEvent.eventCode)}</Td>
+                                    <Td>{receiver.registeredEvents.map(registeredEvent => {
+                                        return (
+                                            <span className='bg-slate-200 font-semibold py-1 px-2 rounded-xl text-sm'>{registeredEvent.eventCode}</span>
+                                        )
+                                    })}</Td>
                                     <Td className='flex justify-center space-x-4'>
-                                        <button className='p-2 rounded hover:bg-slate-500'>
+                                        <button className='p-2 rounded hover:bg-blue-100'>
                                             <AiOutlineEdit/>
                                         </button>
                                         <TrashButton useMutation={() => useDestroyReceiver(receiver.id)}/>

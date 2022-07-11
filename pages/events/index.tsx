@@ -1,14 +1,25 @@
-import { useEvents } from "../../hooks/events-hooks";
-import { useEventTypes } from "../../hooks/event-types-hooks";
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { useState } from "react";
+import { useEventTypes, useDestroyEventType } from "../../hooks/event-types-hooks";
+import { AiOutlineLoading3Quarters, AiOutlineEdit } from 'react-icons/ai';
 
 import { Table, TBody, THead, Td, Th, Tr } from "../../components/table";
 import { Button } from "../../components/Button";
 
+import { CreateEventTypesModal } from "../../components/modals/create-event-types-modal/create-event-types-modal";
+import { EditEventTypeModal } from "../../components/modals/edit-event-types-modal";
+import { TrashButton } from "../../components/TrashButton";
+
 const Events = () => {
 
+    const [createModalOpen, setCreateModalOpen] = useState(false);
+    const [editEventType, setEditEventType] = useState<{
+        code: string;
+        name?: string;
+        description?: string;
+    }>();
+
     const { data: eventTypes, isLoading } = useEventTypes();
-    const { data: events } = useEvents();
+    // const { data: events } = useEvents();
 
 
     if (isLoading) {
@@ -20,10 +31,10 @@ const Events = () => {
     } 
 
     return (
-        <div className="p-4 w-full space-y-4">
-            <div className="flex justify-between">
-                <h1 className="font-bold text-lg">Eventos</h1>
-                <Button onClick={() => {alert("o")}}>Adicionar</Button>
+        <div className="p-4 w-full">
+            <div className="flex justify-between pb-4">
+                <h1 className="font-bold text-lg">Tipos de Eventos</h1>
+                <Button onClick={() => { setCreateModalOpen(true) }}>Adicionar</Button>
             </div>
             <Table>
                 <THead>
@@ -32,6 +43,7 @@ const Events = () => {
                         <Th className='w-44'>Nome</Th>
                         <Th>Descrição</Th>
                         <Th className='w-48'>Criado em</Th>
+                        <Th className="w-12">Ações</Th>
                     </tr>
                 </THead>
                 <TBody>
@@ -39,46 +51,30 @@ const Events = () => {
                         eventTypes?.map(eventType => {
                             return (
                                 <Tr key={eventType.code}>
-                                    <Td>{eventType.code}</Td>
+                                    <Td className="font-semibold">{eventType.code}</Td>
                                     <Td>{eventType.name}</Td>
                                     <Td>{eventType.description}</Td>
                                     <Td>{new Date(eventType.createdAt).toLocaleString()}</Td>
+                                    <Td className="flex justify-center space-x-4">
+                                        <button className='p-2 rounded hover:bg-blue-100' onClick={()=> setEditEventType(eventType)} >
+                                            <AiOutlineEdit/>
+                                        </button>
+                                        <TrashButton useMutation={() => useDestroyEventType(eventType.code)}/>
+                                    </Td>
                                 </Tr>
                             )
                         })
                     }
                 </TBody>
             </Table>
+            
+            <CreateEventTypesModal open={createModalOpen} onClose={() => setCreateModalOpen(false)}/>
+            <EditEventTypeModal eventType={editEventType} onClose={() => setEditEventType(undefined)}/> 
         </div>
     )
 
-    return (
-        <div className="p-4 w-full">
-            <Table>
-                <THead>
-                    <tr>
-                        <Th className='w-36'>Código</Th>
-                        <Th>Texto</Th>
-                        <Th className='w-48'>Data</Th>
-                    </tr>
-                </THead>
-                <TBody>
-                    {
-                        events?.map(event => {
-                            return (
-                                <Tr key={event.id} >
-                                    <Td>{event.code}</Td>
-                                    <Td>{event.text}</Td>
-                                    <Td>{event.createdAt}</Td>
-                                </Tr>
-                            )
-                        })
-                    } 
-                </TBody>
-            </Table>
-        
-        </div>
-    )
+   
+   
 }
 
 export default Events;

@@ -27,7 +27,7 @@ const Notifications = () => {
                         <Th className="w-36">Evento</Th>
                         <Th>Texto</Th>
                         <Th className="w-48">Recebedor</Th>
-                        <Th className="w-48">Data</Th>
+                        <Th className="w-48">Criado em</Th>
                     </tr>
                 </THead>
                 <TBody className="">
@@ -35,7 +35,7 @@ const Notifications = () => {
                         notifications?.map(notification => {
                             return (
                                 <Tr key={notification.createdAt} >
-                                    <Td>{notification.event.code}</Td>
+                                    <Td className="font-semibold">{notification.event.code}</Td>
                                     <Td>{notification.event.text}</Td>
                                     <Td>{notification.receiver.name}</Td>
                                     <Td>{new Date(notification.createdAt).toLocaleString()}</Td>
