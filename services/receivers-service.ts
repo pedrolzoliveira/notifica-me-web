@@ -50,3 +50,27 @@ export async function destroy(params: destroyParams) {
     });
     return response.status === 200;
 }
+
+
+interface updateParams {
+    id: string;
+    name: string;
+    registeredEvents: string[];
+}
+export async function update(params: updateParams) {
+    const response = await API.put<typeof params, AxiosResponse<{
+        receiver: {
+            id: string;
+            customerId: string;
+            number: string;
+            name: string;
+            messenger: "whatsapp" | "telegram" | "sms";
+            registeredEvents: {
+                eventCode: string;
+                receiverId: string;
+            }[]
+        }
+    }>>('/receivers', params);
+    return response.data.receiver;
+
+}
