@@ -15,7 +15,7 @@ export const SideBar = () => {
                 <FiHome/>
                 <p className='hidden sm:block'>Home</p> 
             </OptionSideBar>
-            <OptionSideBar href='services'>
+            <OptionSideBar href='plans'>
                 <BsFillGridFill/>
                 <p className='hidden sm:block'>Planos</p>
             </OptionSideBar>
