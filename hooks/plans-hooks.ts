@@ -1,6 +1,5 @@
 import { useQuery, useQueryClient, useMutation } from "react-query"
-
-import { create, destroy, find, findAll, update } from "../services/plans-service";
+import { create, find, findAll, update } from "../services/plans-service";
 
 export function usePlans() {
     return useQuery('plans', findAll);
@@ -30,4 +29,3 @@ export function useUpdatePlan(id: string) {
         }
     })
 }
-

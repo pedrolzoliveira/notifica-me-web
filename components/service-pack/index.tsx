@@ -1,22 +1,26 @@
 import { formataReal } from'../../utils/formataReal';
-
+import { useRouter } from 'next/router';
 import { Button } from '../Button';
 
 type ServicePackProps = {
   data: {
-    title: string;
+    id: string;
+    name: string;
+    description: string;
     price: number;
-    text: string;
     registredEvents: string[];
   }
 }
 
 export const ServicePack = ({ data }: ServicePackProps) => {
+
+    const router = useRouter();
+
     return (
         <div className='transition-all border rounded p-4 hover:ring-1 hover:bg-blue-50 cursor-pointer flex flex-col justify-between shadow'>
           <div>
-            <h1 className='text-2xl mb-4'>{data.title}</h1>
-            <p>{data.text}</p>
+            <h1 className='text-2xl mb-4'>{data.name}</h1>
+            <p>{data.description}</p>
             <br/>
             {
               data.registredEvents.length ?
@@ -36,7 +40,7 @@ export const ServicePack = ({ data }: ServicePackProps) => {
           </div>
           <div className='flex justify-evenly items-center py-2'>
             <p className='text-xl text-gray-700 '>{formataReal(data.price)} /mês</p>
-            <Button>Ver Detalhes</Button>
+            <Button onClick={() => router.push(`/plans/${data.id}`)}>Ver Detalhes</Button>
           </div>
         </div>
     )

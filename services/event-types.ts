@@ -1,5 +1,5 @@
-import { AxiosResponse } from "axios";
-import { API } from "./api";
+import { AxiosResponse } from 'axios';
+import { API } from './api';
 
 export async function findAll() {
     const response = await API.get<{
@@ -45,7 +45,6 @@ export async function create(params: createParams) {
     }>>('/event-types', params);
     return response.data.eventType;
 }
-
 
 interface destroyParams {
     code: string;

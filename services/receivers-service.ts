@@ -20,6 +20,23 @@ export async function findAll() {
     return response.data.receivers;
 }
 
+export async function find(id: string) {
+    const response = await API.get<{
+        receiver: {
+            id: string;
+            customerId: string;
+            name: string;
+            number: string;
+            messenger: "whatsapp" | "telegram" | "sms";
+            registeredEvents: {
+                eventCode: string;
+                receiverId: string;
+            }[]
+        }
+    }>(`/receivers?id=${id}`);
+    return response.data.receiver;
+}
+
 interface createParams {
     customerId: string;
     name: string;

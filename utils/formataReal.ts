@@ -11,7 +11,7 @@ export function formataReal(centavos : number | undefined) {
         return [antesVirgulaFormatado, depoisVirgula].join(',');
     }
     if (!centavos) {
-        return `R$ 0,00`
+        return `R$ 0,00`;
     }
     const semPontos = (centavos/100).toFixed(2).replace('.', ',');
     const formatado  = AdicionaPonto(semPontos);

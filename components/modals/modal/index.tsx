@@ -1,4 +1,4 @@
-import { ReactFragment } from "react";
+import { ReactFragment } from 'react';
 
 type ModalProps = {
     open: boolean;

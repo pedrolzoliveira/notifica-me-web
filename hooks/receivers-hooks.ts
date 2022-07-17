@@ -1,10 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { findAll, create, destroy, update } from '../services/receivers-service';
+import { findAll, find, create, destroy, update } from '../services/receivers-service';
 
 export function useReceivers() {
     return useQuery('receivers', findAll);
 }
 
+export function useReceiver(id: string) {
+    return useQuery(`receiver-${id}`, () => find(id))
+}
 
 export function useAddReceiver() {
     const queryClient = useQueryClient();

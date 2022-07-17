@@ -1,6 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from "react-query";
-import { findAll, find, create, destroy, update } from "../services/event-types";
-
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { findAll, find, create, destroy, update } from '../services/event-types';
 
 export function useEventTypes() {
     return useQuery('event-types', findAll);

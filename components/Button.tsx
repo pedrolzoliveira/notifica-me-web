@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, ButtonHTMLAttributes } from "react"
+import { DetailedHTMLProps, ButtonHTMLAttributes } from 'react';
 
 export const Button = (props : DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) => {
     return (
@@ -7,4 +7,3 @@ export const Button = (props : DetailedHTMLProps<ButtonHTMLAttributes<HTMLButton
         </button>
     )
 }
-
