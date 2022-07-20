@@ -89,5 +89,4 @@ export async function update(params: updateParams) {
         }
     }>>('/receivers', params);
     return response.data.receiver;
-
 }

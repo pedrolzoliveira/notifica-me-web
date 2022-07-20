@@ -36,7 +36,7 @@ interface createParams {
     price: number;
 }
 export async function create(params: createParams) {
-    const response = await API.post<{
+    const response = await API.post<typeof params, {
         plan: {
             id: string;
             name: string;

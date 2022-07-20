@@ -10,7 +10,7 @@ export const SideBar = () => {
                 <FiHome/>
                 <p className='hidden sm:block'>Home</p> 
             </OptionSideBar>
-            <OptionSideBar href='plans'>
+            <OptionSideBar href='admin/event-types'>
                 <BsFillGridFill/>
                 <p className='hidden sm:block'>Planos</p>
             </OptionSideBar>
