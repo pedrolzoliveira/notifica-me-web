@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { useCreatePlan } from '../../../hooks/plans-hooks';
 import { Button } from '../../Button';
-import CurrencyInput, { CurrencyInputProps } from 'react-currency-input-field';
+import CurrencyInput, { CurrencyInputProps, formatValue } from 'react-currency-input-field';
 
 type CreatePlanModalProps = {
     open: boolean;
@@ -59,7 +59,11 @@ export const CreatePlanModal = ({ open, onClose }: CreatePlanModalProps) => {
                     </div>
                     <div>
                         <label htmlFor='number' className='text-gray-700 font-semibold'>Preço</label>
-                        <CurrencyInput value={price} onValueChange={(_, __, values) => { setPrice(values?.float as number) }} prefix='R$ ' allowDecimals allowNegativeValue={false} placeholder='R$' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'/>
+                        <CurrencyInput onValueChange={(_, __, values) => {
+                            console.log(values);
+                            
+                            setPrice(Number(values?.float));
+                        }} prefix='R$ ' allowDecimals allowNegativeValue={false} placeholder='R$' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'/>
                     </div>
                     <div className='space-x-4 w-full flex pt-4'>
                         <Button className='w-full' onClick={handleClose}>Cancelar</Button>
