@@ -24,6 +24,11 @@ export async function findAll() {
             price: number;
             createdAt: string;
             updatedAt: string;
+            events: {
+                code: string;
+                name: string;
+                description: string
+            }[]
         }[]
     }>(`/plans`);
     return response.data.plans;
@@ -34,9 +39,10 @@ interface createParams {
     name: string;
     description: string;
     price: number;
+    events: string[];
 }
 export async function create(params: createParams) {
-    const response = await API.post<typeof params, {
+    const response = await API.post<typeof params, AxiosResponse<{
         plan: {
             id: string;
             name: string;
@@ -45,7 +51,7 @@ export async function create(params: createParams) {
             createdAt: string;
             updatedAt: string;
         }
-    }>('/plans', params);
+    }>>('/plans', params);
     return response.data.plan;
 }
 
@@ -61,6 +67,7 @@ interface updateParams {
     id: string;
     name?: string;
     description?: string;
+    events?: string[];
     price?: number;
 }
 export async function update(params: updateParams) {
@@ -70,6 +77,9 @@ export async function update(params: updateParams) {
             name: string;
             description: string;
             price: number;
+            events: {
+                code: string
+            }[];
             createdAt: string;
             updatedAt: string;
         }
@@ -77,3 +87,4 @@ export async function update(params: updateParams) {
     return response.data.plan;
 
 }
+

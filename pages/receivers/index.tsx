@@ -10,6 +10,7 @@ import { useReceivers, useDestroyReceiver } from '../../hooks/receivers-hooks';
 import { Table, THead, TBody, Td, Th, Tr } from '../../components/table';
 import { Button } from '../../components/Button';
 import { useState } from 'react';
+import { Badge } from '../../components/Badge';
 
 
 
@@ -74,7 +75,7 @@ const Receivers = () => {
                                             {
                                                 receiver.registeredEvents.map(registeredEvent => {
                                                     return (
-                                                        <span className='bg-slate-200 font-semibold py-1 px-2 rounded-xl text-sm'>{registeredEvent.eventCode}</span>
+                                                        <Badge>{registeredEvent.eventCode}</Badge>
                                                     )
                                                 })
                                             }

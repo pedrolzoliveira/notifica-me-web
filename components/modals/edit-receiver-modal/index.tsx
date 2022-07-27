@@ -28,7 +28,7 @@ export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps)
     const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes();
 
     const [name, setName] = useState(receiver.name);
-    const [registeredEvents, setRegisteredEvents] = useState(receiver.registeredEvents.map(event => event.eventCode))
+    const [registeredEvents, setRegisteredEvents] = useState(receiver.registeredEvents.map(event => event.eventCode));
     
 
     const handlesubmit = async (e: FormEvent<HTMLFormElement>) => {

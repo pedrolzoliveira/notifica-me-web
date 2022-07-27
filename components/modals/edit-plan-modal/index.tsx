@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useCreatePlan } from "../../../hooks/plans-hooks";
+import { useUpdatePlan } from "../../../hooks/plans-hooks";
 import { Button } from "../../Button";
 import CurrencyInput, {
 	CurrencyInputProps,
@@ -8,43 +8,38 @@ import CurrencyInput, {
 } from "react-currency-input-field";
 import { useEventTypes } from "../../../hooks/event-types-hooks";
 
-type CreatePlanModalProps = {
-	open: boolean;
+type EditPlanModalProps = {
+	plan?: {
+		id: string;
+		name: string;
+		description: string;
+		price: number;
+		events: string[];
+	};
 	onClose: Function;
 };
 
-export const CreatePlanModal = ({ open, onClose }: CreatePlanModalProps) => {
-	const NAME_DEFAULT_VALUE = "";
-	const DESCRIPTION_DEFAULT_VALUE = "";
-    const DISABLED_DEFAULT_VALUE = true;
-	const PRICE_DEFAULT_VALUE = undefined;
+export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
 
-	const { mutateAsync: add, isLoading } = useCreatePlan();
+	if (!plan) return null;
+
+	const NAME_DEFAULT_VALUE = plan.name;
+	const DESCRIPTION_DEFAULT_VALUE = plan.description;
+    const PRICE_DEFAULT_VALUE =  plan.price;
+
+	const { mutateAsync: update, isLoading } = useUpdatePlan(plan.id);
     const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes();
 
 	const [name, setName] = useState(NAME_DEFAULT_VALUE);
 	const [description, setDescription] = useState(DESCRIPTION_DEFAULT_VALUE);
 	const [price, setPrice] = useState<number | undefined>(PRICE_DEFAULT_VALUE);
     const [events, setEvents] = useState<string[]>([]);
-    const [disabled, setDisabled] = useState(DISABLED_DEFAULT_VALUE);
+    
 
-    useEffect(() => {
-        let disabled_ = false;
-        if (
-            !name ||
-            !description ||
-            !price ||
-            events.length === 0
-        ) disabled_ = true;
-        setDisabled(disabled_);
-    }, [name, description, price, events]);
-
-
-	const handleClose = () => {
+    const handleClose = () => {
 		setName(NAME_DEFAULT_VALUE);
 		setDescription(DESCRIPTION_DEFAULT_VALUE);
 		setPrice(PRICE_DEFAULT_VALUE);
-        setDisabled(DISABLED_DEFAULT_VALUE);
         setEvents([]);
 		onClose();
 	};
@@ -53,7 +48,7 @@ export const CreatePlanModal = ({ open, onClose }: CreatePlanModalProps) => {
 		e.preventDefault();
 		if (isLoading) return;
 
-		await add({
+		await update({
 			name,
 			description,
 			price: price as number,
@@ -63,14 +58,12 @@ export const CreatePlanModal = ({ open, onClose }: CreatePlanModalProps) => {
 		handleClose();
 	};
 
-	if (!open) return null;
-
 	return (
 		<div className="absolute bg-black inset-0 bg-opacity-50 flex items-center justify-center">
 			<div className="bg-white rounded p-8 w-96">
 				<form className="space-y-4" onSubmit={handleSubmit}>
 					<h1 className="font-semibold text-gray-700 text-xl">
-						Adicionar Plano
+						Editar Plano
 					</h1>
 					<div className="pt-4">
 						<label htmlFor="name" className="text-gray-700 font-semibold">
@@ -141,14 +134,13 @@ export const CreatePlanModal = ({ open, onClose }: CreatePlanModalProps) => {
 							Cancelar
 						</Button>
 						<Button 
-							className={`w-full flex items-center justify-center ${disabled ? "bg-gray-500" : "" }`}
+							className='w-full flex items-center justify-center'
 							type="submit"
-                            disabled={disabled}
 						>
 							{isLoading ? (
-								<AiOutlineLoading3Quarters className="animate-spin" />
+								<AiOutlineLoading3Quarters className="animate-spin"/>
 							) : (
-								"Adicionar"
+								"Salvar"
 							)}
 						</Button>
 					</div>
