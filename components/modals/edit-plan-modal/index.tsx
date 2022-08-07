@@ -33,7 +33,7 @@ export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
 	const [name, setName] = useState(NAME_DEFAULT_VALUE);
 	const [description, setDescription] = useState(DESCRIPTION_DEFAULT_VALUE);
 	const [price, setPrice] = useState<number | undefined>(PRICE_DEFAULT_VALUE);
-    const [events, setEvents] = useState<string[]>([]);
+    const [events, setEvents] = useState<string[]>(plan.events);
     
 
     const handleClose = () => {
@@ -125,6 +125,7 @@ export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
 							prefix="R$ "
 							allowDecimals
 							allowNegativeValue={false}
+							defaultValue={PRICE_DEFAULT_VALUE / 100}
 							placeholder="R$"
 							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 						/>

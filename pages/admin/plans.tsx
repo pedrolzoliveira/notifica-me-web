@@ -9,7 +9,6 @@ import { TrashButton } from '../../components/TrashButton';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { Badge } from '../../components/Badge';
 
-
 const Plans = () => {
 
     const { data: plans } = usePlans();
@@ -25,7 +24,6 @@ const Plans = () => {
 
     return (
         <div className='p-4 w-full'>
-
             <div className='flex justify-between pb-4'>
                 <h1 className='font-bold text-lg'>Meus Planos</h1>
                 <Button onClick={() => setCreateModalOpen(true)}>Adicionar</Button>
@@ -75,3 +73,4 @@ const Plans = () => {
 }
 
 export default Plans;
+
