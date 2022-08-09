@@ -1,5 +1,5 @@
 import { FormEvent, useState, ChangeEvent } from 'react';
-import { useCreateEventType } from '../../../hooks/event-types-hooks';
+import { useCreateCredential } from '../../../hooks/credentials-hooks';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { Button } from '../../Button';
 
@@ -16,7 +16,7 @@ export const CreateCredentialModal = ({ open, onClose }: CreateCredentialModalPr
     const NAME_DEFAULT_VALUE = '';
 
     const { data: eventTypes } = useEventTypes();
-    const { mutateAsync: create, isLoading } = useCreateEventType();
+    const { mutateAsync: create, isLoading } = useCreateCredential();
 
     const [code, setCode] = useState(CODE_DEFAULT_VALUE);
     const [name, setName] = useState(NAME_DEFAULT_VALUE);
@@ -38,7 +38,6 @@ export const CreateCredentialModal = ({ open, onClose }: CreateCredentialModalPr
         await create({
             code,
             name,
-            description: ''
         });
         handleClose();
     }
