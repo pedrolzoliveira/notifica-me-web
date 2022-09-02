@@ -4,7 +4,18 @@ import { BiMessageDetail } from 'react-icons/bi';
 import { FiHome } from 'react-icons/fi';
 import { FaRegIdCard } from 'react-icons/fa';
 
+import { useRouter } from 'next/router';
+
+
+
 export const SideBar = () => {
+
+    if (
+        new RegExp('/login').test(
+            useRouter().pathname
+        )
+    ) return null;
+
     return (
         <div className='sticky top-0 left-0 h-screen sm:min-w-[210px] flex flex-col p-4 space-y-4 border-r justify-between'>
             <div>
