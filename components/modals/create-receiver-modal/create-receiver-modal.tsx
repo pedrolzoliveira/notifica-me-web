@@ -1,8 +1,13 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, ChangeEvent, useEffect } from 'react';
 import { useAddReceiver } from '../../../hooks/receivers-hooks';
 import { Button } from '../../Button';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { BiError } from 'react-icons/bi';
+import { Input } from '../../Input';
+import ReactInputMask from 'react-input-mask';
+
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
 
 type CreateReceiverModalProps = {
     open: boolean;
@@ -13,40 +18,51 @@ export const CreateReceiverModal = ({ open, onClose }: CreateReceiverModalProps)
 
     const { mutateAsync: add, isLoading, error } = useAddReceiver();
     const [name, setName] = useState('');
-    const [number, setNumber] = useState('+55');
+    const [number, setNumber] = useState('');
+    const [maskedNumber, setMaskedNumber] = useState('');
     const [messenger, setMessenger] = useState<'whatsapp' | 'telegram' | 'sms'>('whatsapp');
 
     const handlesubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (isLoading) return;
-
-        await add({
-            name,
-            messenger,
-            number,
-            customerId: 'be6366bb-1bf0-4f04-ad46-73a351689d80',
-        });
-        handleClose();
+        try {
+            await add({
+                name,
+                messenger,
+                number,
+            });
+            handleClose();
+        } catch(error) {
+            let errorMessage;
+            if (error instanceof AxiosError) {
+                errorMessage = error.response?.data.error;
+            }
+            toast.error(errorMessage);
+        }
     }
 
-    const handleNameChange = (e: any) => {
+    const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
     }
 
-    const handleMessengerChange = (e: any) => {
-        setMessenger(e.target.value);
+    const handleMessengerChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setMessenger(e.target.value as any);
     }
 
-    const handleNumberChange = (e: any) => {
-        setNumber(e.target.value);
+    const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setNumber(e.target.value.replace(/[^\d]/g, ''));
+        setMaskedNumber(e.target.value);
     }
 
     const handleClose = () => {
         setName('');
         setNumber('');
+        setMaskedNumber('');
         setMessenger('whatsapp');
         onClose();
     }
+
+    useEffect(() => { console.log(number) }, [number]);
 
     if (!open) return null;
 
@@ -57,11 +73,14 @@ export const CreateReceiverModal = ({ open, onClose }: CreateReceiverModalProps)
                     <h1 className='font-semibold text-gray-700 text-xl'>Adicionar Recebedor</h1>
                     <div className='pt-4'>
                         <label htmlFor='name' className='text-gray-700 font-semibold'>Nome</label>
-                        <input type='text' value={name} onChange={handleNameChange} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 '/>
+                        <Input
+                        type='text'
+                        value={name}
+                        onChange={handleNameChange}/>
                     </div>
                     <div>
                         <label htmlFor='type' className='text-gray-700 font-semibold'>Tipo</label>
-                        <select value={messenger} onChange={handleMessengerChange} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
+                        <select value={messenger} onChange={handleMessengerChange} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'>
                             <option value={'whatsapp'}>WhatsApp</option>
                             <option value={'telegram'}>Telegram</option>
                             <option value={'sms'}>SMS</option>
@@ -69,7 +88,15 @@ export const CreateReceiverModal = ({ open, onClose }: CreateReceiverModalProps)
                     </div>
                     <div>
                         <label htmlFor='number' className='text-gray-700 font-semibold'>Número</label>
-                        <input type='text'  value={number} onChange={handleNumberChange} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'/>
+                        <ReactInputMask
+                        mask='+99 (99) 99999-9999'
+                        className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                        // @ts-ignore
+                        maskChar={null}
+                        alwaysShowMask
+                        value={maskedNumber}
+                        onChange={handleNumberChange}
+                        />
                     </div>
                     {
                         error ?

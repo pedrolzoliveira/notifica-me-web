@@ -39,7 +39,6 @@ export async function find(id: string) {
 }
 
 interface createParams {
-    customerId: string;
     name: string;
     number: string;
     messenger: "whatsapp" | "telegram" | "sms"

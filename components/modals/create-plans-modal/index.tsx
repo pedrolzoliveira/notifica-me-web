@@ -7,6 +7,7 @@ import CurrencyInput, {
 	formatValue,
 } from "react-currency-input-field";
 import { useEventTypes } from "../../../hooks/event-types-hooks";
+import { Input } from "../../Input";
 
 type CreatePlanModalProps = {
 	open: boolean;
@@ -76,11 +77,10 @@ export const CreatePlanModal = ({ open, onClose }: CreatePlanModalProps) => {
 						<label htmlFor="name" className="text-gray-700 font-semibold">
 							Nome
 						</label>
-						<input
+						<Input
 							type="text"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
-							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
 						/>
 					</div>
 					<div className="pt-4">
@@ -90,7 +90,7 @@ export const CreatePlanModal = ({ open, onClose }: CreatePlanModalProps) => {
 						<textarea
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
-							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 						/>
 					</div>
                     <div>

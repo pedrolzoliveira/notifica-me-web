@@ -15,7 +15,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps}/>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer
+        hideProgressBar
+        position='bottom-right'
+      />
     </QueryClientProvider>
   )
 }
