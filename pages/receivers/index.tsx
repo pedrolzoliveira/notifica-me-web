@@ -1,13 +1,10 @@
 import { BsWhatsapp } from 'react-icons/bs';
-
 import { CreateReceiverModal } from '../../components/modals/create-receiver-modal/create-receiver-modal';
 import { EditReceiverModal } from '../../components/modals/edit-receiver-modal';
 import { TrashButton } from '../../components/TrashButton';
-
-import { AiOutlineLoading3Quarters, AiOutlineEdit } from 'react-icons/ai';;
-
+import { AiOutlineLoading3Quarters, AiOutlineEdit } from 'react-icons/ai';
 import { useReceivers, useDestroyReceiver } from '../../hooks/receivers-hooks';
-import { Table, THead, TBody, Td, Th, Tr } from '../../components/table';
+import { Table, THead, TBody, Td, Th, Tr } from '../../components/Table';
 import { Button } from '../../components/Button';
 import { useState } from 'react';
 import { Badge } from '../../components/Badge';
@@ -27,7 +24,7 @@ const Receivers = () => {
         number: string;
         events: {
             id: string;
-            eventCode: string;
+            code: string;
             receiverId: string;
         }[];
         messenger: "whatsapp" | "telegram" | "sms"
@@ -62,7 +59,6 @@ const Receivers = () => {
                     <TBody>
                         {
                             receivers?.map(receiver => {
-                                
                                 return (
                                     <Tr key={receiver.id} >
                                         <Td>{receiver.name}</Td>

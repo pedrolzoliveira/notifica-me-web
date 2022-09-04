@@ -13,7 +13,7 @@ type EditReceiverModalProps = {
         messenger: 'whatsapp' | 'telegram' | 'sms'
         events: {
             id: string;
-            eventCode: string;
+            code: string;
             receiverId: string;
         }[],
     }
@@ -22,15 +22,14 @@ type EditReceiverModalProps = {
 
 export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps) => {
 
-    if (!receiver) return null;
-
-    const { mutateAsync: update, isLoading, error } = useUpdateReceiver(receiver.id);
-    const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes();
-
-    const [name, setName] = useState(receiver.name);
-    const [events, setevents] = useState(receiver.events.map(event => event.eventCode));
     
-
+    const { mutateAsync: update, isLoading, error } = useUpdateReceiver(receiver?.id as string);
+    const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes();
+    
+    const [name, setName] = useState(receiver?.name || '');
+    const [events, setevents] = useState(receiver?.events.map(event => event.code) || []);
+    
+    
     const handlesubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (isLoading) return;
@@ -40,17 +39,18 @@ export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps)
         });
         handleClose();
     }
-
+    
     const handleNameChange = (e: any) => {
         setName(e.target.value);
     }
-
-
+    
+    
     const handleClose = () => {
         setName('');
         onClose();
     }
-
+    
+    if (!receiver) return null;
     if (!open) return null;
 
     return (

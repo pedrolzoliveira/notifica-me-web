@@ -45,7 +45,7 @@ export const CreateReceiverModal = ({ open, onClose }: CreateReceiverModalProps)
         setName(e.target.value);
     }
 
-    const handleMessengerChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleMessengerChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setMessenger(e.target.value as any);
     }
 
@@ -61,9 +61,7 @@ export const CreateReceiverModal = ({ open, onClose }: CreateReceiverModalProps)
         setMessenger('whatsapp');
         onClose();
     }
-
-    useEffect(() => { console.log(number) }, [number]);
-
+    
     if (!open) return null;
 
     return (

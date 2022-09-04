@@ -10,10 +10,13 @@ import { useRouter } from 'next/router';
 
 export const SideBar = () => {
 
+    const { pathname } = useRouter();
+
     if (
-        new RegExp('/login').test(
-            useRouter().pathname
-        )
+        [
+            '/signin',
+            '/signup'
+        ].includes(pathname)
     ) return null;
 
     return (

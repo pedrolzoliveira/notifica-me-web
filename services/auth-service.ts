@@ -71,3 +71,20 @@ export async function SignUpAdmin(data: signUpParamsAdmin) {
     if (response.status !== 201) throw new Error('SignUp error');
     return response.data;
 }
+
+export async function info() {
+    const response = await API.get<{
+        customer?: {
+            id: string;
+            name: string;
+            email: string;
+        },
+        admin?: {
+            id: string;
+            name: string;
+            email: string;
+        }
+    }>('/auth/info');
+    if (response.status !== 200) throw new Error('Info error');
+    return response.data;
+}
