@@ -9,13 +9,17 @@ import { Button } from '../../components/Button';
 import { useState } from 'react';
 import { Badge } from '../../components/Badge';
 import { formataCelular } from '../../utils/formata-celular';
+import { useInfo } from '../../hooks/auth-hooks';
+import { useRouter } from 'next/router';
 
 
 
 
 const Receivers = () => {
-    
+
+    const router = useRouter();
     const { data: receivers, isLoading } = useReceivers();
+    const { data: info, isLoading: infoLoading } = useInfo();
     const [editReceiver, setEditReceiver] = useState<{
         id: string;
         name: string;
@@ -36,6 +40,10 @@ const Receivers = () => {
                 <AiOutlineLoading3Quarters className='animate-spin h-20 w-20'/>
             </div>
         )
+    }
+
+    if (!info?.customer && !infoLoading) {
+        router.push('/signin')
     }
 
     return (

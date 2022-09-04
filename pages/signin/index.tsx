@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useSignInMutation } from '../../hooks/auth-hooks';
+import { useSignInMutation, useInfo } from '../../hooks/auth-hooks';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 export const SignIn = () => {
 
     const {  mutateAsync: signIn, isLoading } = useSignInMutation();
+    const { data: info } = useInfo();
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,6 +29,10 @@ export const SignIn = () => {
         }
     }
     
+    if (info) {
+        router.push('/')
+    }
+
     return (
         <div className='absolute bg-black inset-0 bg-opacity-50 flex items-center justify-center'>
             <div className='bg-white rounded p-8 w-96'>

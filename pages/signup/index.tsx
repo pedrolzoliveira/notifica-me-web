@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useSignUpMutation } from '../../hooks/auth-hooks';
+import { useInfo, useSignUpMutation } from '../../hooks/auth-hooks';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 export const SignUp = () => {
 
     const {  mutateAsync: signUp, isLoading } = useSignUpMutation();
+    const { data: info } = useInfo();
     const router = useRouter();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -29,6 +30,10 @@ export const SignUp = () => {
         } catch(error) {
             toast.error('Algo deu errado!');
         }
+    }
+
+    if (info) {
+        router.push('/');
     }
     
     return (

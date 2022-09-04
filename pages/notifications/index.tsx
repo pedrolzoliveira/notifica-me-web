@@ -1,10 +1,14 @@
 import { useNotifications } from '../../hooks/notifications-hooks';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { Table, TBody, THead, Td, Th, Tr } from '../../components/table';
+import { Table, TBody, THead, Td, Th, Tr } from '../../components/Table';
+import { useInfo } from '../../hooks/auth-hooks';
+import { useRouter } from 'next/router';
 
 const Notifications = () => {
 
+    const router = useRouter();
     const { data: notifications, isLoading } = useNotifications();
+    const { data: info, isLoading: infoLoading } = useInfo();
 
     if (isLoading) {
         return (
@@ -13,6 +17,10 @@ const Notifications = () => {
             </div>
         )
     } 
+
+    if (!info?.customer && !infoLoading) {
+        router.push('/signin')
+    }
 
     return (
         <div className='p-4 w-full h-full space-y-4'>

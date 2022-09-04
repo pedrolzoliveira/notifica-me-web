@@ -4,6 +4,8 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { Table, TBody, THead, Td, Th, Tr } from '../../components/Table';
 import { CreateEventTypesModal } from '../../components/modals/create-event-types-modal/create-event-types-modal';
 import { EditEventTypeModal } from '../../components/modals/edit-event-types-modal';
+import { useInfo } from '../../hooks/auth-hooks';
+import { useRouter } from 'next/router';
    
 const Events = () => {
 
@@ -13,7 +15,10 @@ const Events = () => {
         name?: string;
         description?: string;
     }>();
+    const router = useRouter();
+    const { data: info, isLoading: infoLoading } = useInfo();
     const { data: events, isLoading } = useEvents();
+
 
     if (isLoading) {
         return (
@@ -22,6 +27,12 @@ const Events = () => {
             </div>
         )
     } 
+
+    if (!info?.customer && !infoLoading) {
+        router.push('/signin');
+    }   
+
+    
 
     return (
         <div className='p-4 w-full'>

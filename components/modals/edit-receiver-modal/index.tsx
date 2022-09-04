@@ -4,6 +4,8 @@ import { useEventTypes } from '../../../hooks/event-types-hooks';
 import { Button } from '../../Button';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { BiError } from 'react-icons/bi';
+import { Input } from '../../Input';
+import ReactInputMask from 'react-input-mask';
 
 type EditReceiverModalProps = {
     receiver?: {
@@ -21,14 +23,14 @@ type EditReceiverModalProps = {
 }
 
 export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps) => {
+    if (!receiver) return null;
 
     
-    const { mutateAsync: update, isLoading, error } = useUpdateReceiver(receiver?.id as string);
+    const { mutateAsync: update, isLoading, error } = useUpdateReceiver(receiver.id);
     const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes();
     
-    const [name, setName] = useState(receiver?.name || '');
-    const [events, setevents] = useState(receiver?.events.map(event => event.code) || []);
-    
+    const [name, setName] = useState(receiver.name);
+    const [events, setevents] = useState(receiver.events.map(event => event.code));
     
     const handlesubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -50,7 +52,6 @@ export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps)
         onClose();
     }
     
-    if (!receiver) return null;
     if (!open) return null;
 
     return (
@@ -60,15 +61,23 @@ export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps)
                     <h1 className='font-semibold text-gray-700 text-xl'>Editar Recebedor</h1>
                     <div className='pt-4'>
                         <label htmlFor='name' className='text-gray-700 font-semibold'>Nome</label>
-                        <input type='text' value={name} onChange={handleNameChange} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 '/>
+                        <Input type='text' value={name} onChange={handleNameChange}/>
                     </div>
                     <div>
                         <label htmlFor='type' className='text-gray-700 font-semibold'>Tipo</label>
-                        <input value={receiver.messenger} readOnly className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'/>
+                        <Input
+                        value={receiver.messenger}
+                        readOnly
+                        />
                     </div>
                     <div>
                         <label htmlFor='number' className='text-gray-700 font-semibold'>Número</label>
-                        <input type='text'  value={receiver.number} readOnly className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'/>
+                        <ReactInputMask
+                        mask={'+99 (99) 99999-9999'}
+                        type='text'
+                        className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                        value={receiver.number}
+                        readOnly/>
                     </div>
                     <div>
                         <span className='text-gray-700 font-semibold'>Eventos</span>
