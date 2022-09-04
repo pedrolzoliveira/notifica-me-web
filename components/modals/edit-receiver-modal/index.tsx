@@ -11,7 +11,7 @@ type EditReceiverModalProps = {
         name: string;
         number: string;
         messenger: 'whatsapp' | 'telegram' | 'sms'
-        registeredEvents: {
+        events: {
             id: string;
             eventCode: string;
             receiverId: string;
@@ -28,7 +28,7 @@ export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps)
     const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes();
 
     const [name, setName] = useState(receiver.name);
-    const [registeredEvents, setRegisteredEvents] = useState(receiver.registeredEvents.map(event => event.eventCode));
+    const [events, setevents] = useState(receiver.events.map(event => event.eventCode));
     
 
     const handlesubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -36,7 +36,7 @@ export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps)
         if (isLoading) return;
         await update({
             name,
-            registeredEvents
+            events
         });
         handleClose();
     }
@@ -82,11 +82,11 @@ export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps)
                                 eventTypes?.map(event => {
                                     return (
                                         <div className='flex items-center space-x-2' key={event.code}>
-                                            <input type='checkbox' checked={registeredEvents.includes(event.code)} onChange={e => {
+                                            <input type='checkbox' checked={events.includes(event.code)} onChange={e => {
                                                 if (e.target.checked) {
-                                                    setRegisteredEvents([...registeredEvents, event.code]);
+                                                    setevents([...events, event.code]);
                                                 } else {
-                                                    setRegisteredEvents(registeredEvents.filter(str => str !== event.code))
+                                                    setevents(events.filter(str => str !== event.code))
                                                 }                          
                                             }} className='cursor-pointer'/>
                                             <span>

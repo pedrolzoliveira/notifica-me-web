@@ -1,21 +1,22 @@
 import { AxiosResponse } from 'axios';
 import { API } from './api';
 
+interface Receiver {
+    id: string;
+    customerId: string;
+    name: string;
+    number: string;
+    messenger: "whatsapp" | "telegram" | "sms";
+    events: {
+        id: string;
+        code: string;
+        receiverId: string;
+    }[]
+}
 
 export async function findAll() {
     const response = await API.get<{
-        receivers: {
-            id: string;
-            customerId: string;
-            name: string;
-            number: string;
-            messenger: "whatsapp" | "telegram" | "sms";
-            registeredEvents: {
-                id: string;
-                eventCode: string;
-                receiverId: string;
-            }[]
-        }[]
+        receivers: Receiver[]
     }>('/receivers');
     return response.data.receivers;
 }
@@ -28,7 +29,7 @@ export async function find(id: string) {
             name: string;
             number: string;
             messenger: "whatsapp" | "telegram" | "sms";
-            registeredEvents: {
+            events: {
                 eventCode: string;
                 receiverId: string;
             }[]
@@ -46,13 +47,7 @@ interface createParams {
 
 export async function create(params: createParams) {
     const response = await API.post<typeof params, AxiosResponse<{
-        receiver: {
-            customerId: string;
-            id: string;
-            name: string;
-            number: string;
-            messenger: "whatsapp" | "telegram" | "sms";
-        }
+        receiver: Omit<Receiver, 'events'>
     }>>('/receivers', params);
     return response.data.receiver;
 }
@@ -72,7 +67,7 @@ export async function destroy(params: destroyParams) {
 interface updateParams {
     id: string;
     name: string;
-    registeredEvents: string[];
+    events: string[];
 }
 export async function update(params: updateParams) {
     const response = await API.put<typeof params, AxiosResponse<{
@@ -82,7 +77,7 @@ export async function update(params: updateParams) {
             number: string;
             name: string;
             messenger: "whatsapp" | "telegram" | "sms";
-            registeredEvents: {
+            events: {
                 eventCode: string;
                 receiverId: string;
             }[]

@@ -11,6 +11,7 @@ import { Table, THead, TBody, Td, Th, Tr } from '../../components/table';
 import { Button } from '../../components/Button';
 import { useState } from 'react';
 import { Badge } from '../../components/Badge';
+import { formataCelular } from '../../utils/formata-celular';
 
 
 
@@ -24,7 +25,7 @@ const Receivers = () => {
         id: string;
         name: string;
         number: string;
-        registeredEvents: {
+        events: {
             id: string;
             eventCode: string;
             receiverId: string;
@@ -68,14 +69,14 @@ const Receivers = () => {
                                         <Td className='flex items-center space-x-2'>
                                             <BsWhatsapp/>
                                             <span>
-                                                {receiver.number}
+                                                {formataCelular(receiver.number)}
                                             </span>
                                         </Td>
                                         <td className='space-x-2'>
                                             {
-                                                receiver.registeredEvents.map(registeredEvent => {
+                                                receiver.events.map(event => {
                                                     return (
-                                                        <Badge>{registeredEvent.eventCode}</Badge>
+                                                        <Badge key={event.id}>{event.code}</Badge>
                                                     )
                                                 })
                                             }

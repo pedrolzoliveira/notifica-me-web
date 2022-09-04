@@ -1,5 +1,6 @@
 import axios from 'axios';
 
 export const API = axios.create({
-    baseURL: 'http://localhost:3030'//process.env.API_URL
+    baseURL: 'http://localhost:3030',//process.env.API_URL
+    withCredentials: true,
 })

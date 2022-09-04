@@ -9,7 +9,7 @@ const Services = () => {
         <div className='grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 w-full'>
             {
                 plans?.map(plan => {
-                    return <ServicePack data={{
+                    return <ServicePack key={plan.id} data={{
                         id: plan.id,
                         name: plan.name,
                         description: plan.description,

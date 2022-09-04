@@ -34,7 +34,7 @@ export function useUpdateReceiver(id: string) {
     const queryClient = useQueryClient();
     return useMutation({
         mutationKey: `update-${id}`,
-        mutationFn: ({ name, registeredEvents }:{ name: string, registeredEvents: string[] }) => update({ id, name, registeredEvents }),
+        mutationFn: ({ name, events }:{ name: string, events: string[] }) => update({ id, name, events }),
         onSuccess: () => {
             queryClient.invalidateQueries(['receivers']);
         }
