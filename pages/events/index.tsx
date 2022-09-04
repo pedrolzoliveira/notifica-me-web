@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEvents } from '../../hooks/events-hooks';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { Table, TBody, THead, Td, Th, Tr } from '../../components/table';
+import { Table, TBody, THead, Td, Th, Tr } from '../../components/Table';
 import { CreateEventTypesModal } from '../../components/modals/create-event-types-modal/create-event-types-modal';
 import { EditEventTypeModal } from '../../components/modals/edit-event-types-modal';
    
