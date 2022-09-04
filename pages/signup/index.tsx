@@ -1,15 +1,16 @@
 import { FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useSignInMutation } from '../../hooks/auth-hooks';
+import { useSignUpMutation } from '../../hooks/auth-hooks';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export const SignUp = () => {
 
-    const {  mutateAsync: signIn, isLoading } = useSignInMutation();
-
+    const {  mutateAsync: signUp, isLoading } = useSignUpMutation();
+    const router = useRouter();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,13 +19,15 @@ export const SignUp = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            await signIn({
+            await signUp({
+                name,
                 email,
                 password
             });
-            toast.success('Login efetuado com sucesso!');
+            toast.success('Conta criada com sucesso! Redirecionando...');
+            router.push('/');
         } catch(error) {
-            toast.error('Verifique suas credenciais!');
+            toast.error('Algo deu errado!');
         }
     }
     
@@ -76,7 +79,7 @@ export const SignUp = () => {
                                 isLoading ? 
                                 <AiOutlineLoading3Quarters className='animate-spin'/>
                                 :
-                                'Entrar'
+                                'Criar conta'
                             }
                         </Button>
                     </div>

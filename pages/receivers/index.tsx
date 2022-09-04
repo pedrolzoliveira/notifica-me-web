@@ -14,10 +14,8 @@ import { formataCelular } from '../../utils/formata-celular';
 
 
 const Receivers = () => {
-
+    
     const { data: receivers, isLoading } = useReceivers();
-
-
     const [editReceiver, setEditReceiver] = useState<{
         id: string;
         name: string;

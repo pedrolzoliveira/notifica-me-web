@@ -5,11 +5,12 @@ import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export const SignIn = () => {
 
     const {  mutateAsync: signIn, isLoading } = useSignInMutation();
-
+    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -20,7 +21,8 @@ export const SignIn = () => {
                 email,
                 password
             });
-            toast.success('Login efetuado com sucesso!');
+            toast.success('Login efetuado com sucesso! Redirecionando...');
+            router.push('/');
         } catch(error) {
             toast.error('Verifique suas credenciais!');
         }
