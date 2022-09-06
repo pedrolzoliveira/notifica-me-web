@@ -39,11 +39,11 @@ const Events = () => {
             <div className='flex justify-between pb-4'>
                 <h1 className='font-bold text-lg'>Eventos</h1>
             </div>
-            <Table>
+            <Table className='block max-h-[90vh] overflow-y-scroll'>
                 <THead>
                     <tr>
                         <Th className='w-36'>code</Th>
-                        <Th>Texto</Th>
+                        <Th className='w-full'>Texto</Th>
                         <Th className='w-48'>Criado em</Th>
                     </tr>
                 </THead>

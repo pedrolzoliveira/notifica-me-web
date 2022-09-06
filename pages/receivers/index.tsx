@@ -53,7 +53,7 @@ const Receivers = () => {
                 <Button onClick={() => { setModalOpen(true) }}>Adicionar</Button>
             </div>
             <div className='overflow-auto'>
-                <Table className='block max-h-[90vh] overflow-scroll'>
+                <Table className='block max-h-[90vh] overflow-y-scroll'>
                     <THead>
                         <tr>
                             <Th className='w-36'>Nome</Th>
