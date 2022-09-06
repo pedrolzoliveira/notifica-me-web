@@ -27,13 +27,9 @@ export const SideBar = () => {
             {
                 info?.customer ?
                 <div>
-                    <OptionSideBar href=''>
-                        <FiHome/>
-                        <p className='hidden sm:block'>Home</p> 
-                    </OptionSideBar>
                     <OptionSideBar href='plans'>
                         <BsFillGridFill/>
-                        <p className='hidden sm:block'>Planos</p>
+                        <p className='hidden sm:block'>Meus Planos</p>
                     </OptionSideBar>
                     <OptionSideBar href='notifications'>
                         <BiMessageDetail/>

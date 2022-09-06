@@ -8,7 +8,7 @@ type ServicePackProps = {
     name: string;
     description: string;
     price: number;
-    registredEvents: string[];
+    events: string[];
   }
 }
 
@@ -23,13 +23,13 @@ export const ServicePack = ({ data }: ServicePackProps) => {
             <p>{data.description}</p>
             <br/>
             {
-              data.registredEvents.length ?
+              data.events.length ?
               <>
                 <p>Eventos Cadastrados:</p>
                 <ul className="list-disc ml-8">
                   {
-                    data.registredEvents.map(event => {
-                      return <li>{event}</li>
+                    data.events.map(event => {
+                      return <li key={event}>{event}</li>
                     })
                   }
                 </ul>

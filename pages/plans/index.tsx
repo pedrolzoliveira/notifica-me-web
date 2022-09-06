@@ -14,7 +14,7 @@ const Services = () => {
                         name: plan.name,
                         description: plan.description,
                         price: plan.price,
-                        registredEvents: []
+                        events: plan.events.map(event => event.name),
                     }}
                     />
                 })
