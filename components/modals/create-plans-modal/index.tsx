@@ -1,72 +1,71 @@
-import { FormEvent, useEffect, useState } from "react";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useCreatePlan } from "../../../hooks/plans-hooks";
-import { Button } from "../../Button";
+import { FormEvent, useEffect, useState } from 'react'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { useCreatePlan } from '../../../hooks/plans-hooks'
+import { Button } from '../../Button'
 import CurrencyInput, {
-	CurrencyInputProps,
-	formatValue,
-} from "react-currency-input-field";
-import { useEventTypes } from "../../../hooks/event-types-hooks";
-import { Input } from "../../Input";
+  CurrencyInputProps,
+  formatValue
+} from 'react-currency-input-field'
+import { useEventTypes } from '../../../hooks/event-types-hooks'
+import { Input } from '../../Input'
 
-type CreatePlanModalProps = {
-	open: boolean;
-	onClose: Function;
-};
+interface CreatePlanModalProps {
+  open: boolean
+  onClose: Function
+}
 
 export const CreatePlanModal = ({ open, onClose }: CreatePlanModalProps) => {
-	const NAME_DEFAULT_VALUE = "";
-	const DESCRIPTION_DEFAULT_VALUE = "";
-    const DISABLED_DEFAULT_VALUE = true;
-	const PRICE_DEFAULT_VALUE = undefined;
+  const NAME_DEFAULT_VALUE = ''
+  const DESCRIPTION_DEFAULT_VALUE = ''
+  const DISABLED_DEFAULT_VALUE = true
+  const PRICE_DEFAULT_VALUE = undefined
 
-	const { mutateAsync: add, isLoading } = useCreatePlan();
-    const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes();
+  const { mutateAsync: add, isLoading } = useCreatePlan()
+  const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes()
 
-	const [name, setName] = useState(NAME_DEFAULT_VALUE);
-	const [description, setDescription] = useState(DESCRIPTION_DEFAULT_VALUE);
-	const [price, setPrice] = useState<number | undefined>(PRICE_DEFAULT_VALUE);
-    const [events, setEvents] = useState<string[]>([]);
-    const [disabled, setDisabled] = useState(DISABLED_DEFAULT_VALUE);
+  const [name, setName] = useState(NAME_DEFAULT_VALUE)
+  const [description, setDescription] = useState(DESCRIPTION_DEFAULT_VALUE)
+  const [price, setPrice] = useState<number | undefined>(PRICE_DEFAULT_VALUE)
+  const [events, setEvents] = useState<string[]>([])
+  const [disabled, setDisabled] = useState(DISABLED_DEFAULT_VALUE)
 
-    useEffect(() => {
-        let disabled_ = false;
-        if (
-            !name ||
+  useEffect(() => {
+    let disabled_ = false
+    if (
+      !name ||
             !description ||
             !price ||
             events.length === 0
-        ) disabled_ = true;
-        setDisabled(disabled_);
-    }, [name, description, price, events]);
+    ) disabled_ = true
+    setDisabled(disabled_)
+  }, [name, description, price, events])
 
+  const handleClose = () => {
+    setName(NAME_DEFAULT_VALUE)
+    setDescription(DESCRIPTION_DEFAULT_VALUE)
+    setPrice(PRICE_DEFAULT_VALUE)
+    setDisabled(DISABLED_DEFAULT_VALUE)
+    setEvents([])
+    onClose()
+  }
 
-	const handleClose = () => {
-		setName(NAME_DEFAULT_VALUE);
-		setDescription(DESCRIPTION_DEFAULT_VALUE);
-		setPrice(PRICE_DEFAULT_VALUE);
-        setDisabled(DISABLED_DEFAULT_VALUE);
-        setEvents([]);
-		onClose();
-	};
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (isLoading) return
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		if (isLoading) return;
+    await add({
+      name,
+      description,
+      price: price as number,
+      events
+    })
 
-		await add({
-			name,
-			description,
-			price: price as number,
-            events
-		});
+    handleClose()
+  }
 
-		handleClose();
-	};
+  if (!open) return null
 
-	if (!open) return null;
-
-	return (
+  return (
 		<div className="absolute bg-black inset-0 bg-opacity-50 flex items-center justify-center">
 			<div className="bg-white rounded p-8 w-96">
 				<form className="space-y-4" onSubmit={handleSubmit}>
@@ -97,26 +96,26 @@ export const CreatePlanModal = ({ open, onClose }: CreatePlanModalProps) => {
                         <span className='text-gray-700 font-semibold'>Eventos</span>
                         <div className='flex flex-col space-y-1 h-32'>
                             {
-                                eventTypeLoading ? 
-                                <AiOutlineLoading3Quarters className='animate-spin'/>
-                                : null
+                                eventTypeLoading
+                                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
+                                  : null
                             }
                             {
                                 eventTypes?.map(event => {
-                                    return (
+                                  return (
                                         <div className='flex items-center space-x-2' key={event.code}>
                                             <input type='checkbox' checked={events?.includes(event.code)} onChange={e => {
-                                                if (e.target.checked) {
-                                                    setEvents([...events, event.code]);
-                                                } else {
-                                                    setEvents(events?.filter(str => str !== event.code))
-                                                }                          
+                                              if (e.target.checked) {
+                                                setEvents([...events, event.code])
+                                              } else {
+                                                setEvents(events?.filter(str => str !== event.code))
+                                              }
                                             }} className='cursor-pointer'/>
                                             <span>
                                                 {event.code}
                                             </span>
                                         </div>
-                                    )
+                                  )
                                 })
                             }
                         </div>
@@ -127,7 +126,7 @@ export const CreatePlanModal = ({ open, onClose }: CreatePlanModalProps) => {
 						</label>
 						<CurrencyInput
 							onValueChange={(_, __, values) => {
-								setPrice(Number(values?.float) * 100);
+							  setPrice(Number(values?.float) * 100)
 							}}
 							prefix="R$ "
 							allowDecimals
@@ -140,20 +139,22 @@ export const CreatePlanModal = ({ open, onClose }: CreatePlanModalProps) => {
 						<Button className="w-full" onClick={handleClose}>
 							Cancelar
 						</Button>
-						<Button 
-							className={`w-full flex items-center justify-center ${disabled ? "bg-gray-500" : "" }`}
+						<Button
+							className={`w-full flex items-center justify-center ${disabled ? 'bg-gray-500' : ''}`}
 							type="submit"
                             disabled={disabled}
 						>
-							{isLoading ? (
+							{isLoading
+							  ? (
 								<AiOutlineLoading3Quarters className="animate-spin" />
-							) : (
-								"Adicionar"
-							)}
+							    )
+							  : (
+							  'Adicionar'
+							    )}
 						</Button>
 					</div>
 				</form>
 			</div>
 		</div>
-	);
-};
+  )
+}

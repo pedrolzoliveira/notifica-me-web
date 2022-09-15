@@ -1,6 +1,6 @@
-import { useQuery } from 'react-query';
-import { findAll } from '../services/events-service';
+import { useQuery } from 'react-query'
+import { findAll } from '../services/events-service'
 
 export function useEvents() {
-    return useQuery('events', findAll);
+  return useQuery('events', findAll)
 }

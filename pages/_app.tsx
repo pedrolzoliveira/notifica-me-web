@@ -1,10 +1,10 @@
-import '../styles/globals.css';
-import 'react-toastify/dist/ReactToastify.css';
+import '../styles/globals.css'
+import 'react-toastify/dist/ReactToastify.css'
 import type { AppProps } from 'next/app'
-import { SideBar } from '../components/side-bar';
-import { QueryClientProvider } from 'react-query';
-import { queryClient } from '../queryClient';
-import { ToastContainer } from 'react-toastify';
+import { SideBar } from '../components/side-bar'
+import { QueryClientProvider } from 'react-query'
+import { queryClient } from '../queryClient'
+import { ToastContainer } from 'react-toastify'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -23,4 +23,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   )
 }
 
-export default MyApp;
+export default MyApp

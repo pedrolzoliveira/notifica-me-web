@@ -1,19 +1,18 @@
-import { ReactFragment } from 'react';
+import { ReactFragment } from 'react'
 
-type ModalProps = {
-    open: boolean;
-    children: ReactFragment;
-    onClose?: Function;
+interface ModalProps {
+  open: boolean
+  children: ReactFragment
+  onClose?: Function
 
 }
 
-export const Modal = ({ children, open } : ModalProps) => {
+export const Modal = ({ children, open }: ModalProps) => {
+  if (!open) return null
 
-    if (!open) return null;
-
-    return (
+  return (
         <div>
             { children }
         </div>
-    )
+  )
 }

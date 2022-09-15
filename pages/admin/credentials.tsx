@@ -1,28 +1,25 @@
-import { useState } from 'react';
-import { Button } from '../../components/Button';
-import { Table, THead, TBody, Tr, Td, Th } from '../../components/table';
-import { CreateCredentialModal } from '../../components/modals/create-credential-modal';
-import { useCredentials, useDestroyCredential } from '../../hooks/credentials-hooks';
-import { TrashButton } from '../../components/TrashButton';
+import { useState } from 'react'
+import { Button } from '../../components/Button'
+import { Table, THead, TBody, Tr, Td, Th } from '../../components/table'
+import { CreateCredentialModal } from '../../components/modals/create-credential-modal'
+import { useCredentials, useDestroyCredential } from '../../hooks/credentials-hooks'
+import { TrashButton } from '../../components/TrashButton'
 
-export type KeyShowerProps = {
-    key_: string;
+export interface KeyShowerProps {
+  key_: string
 }
 const KeyShower = ({ key_ }: KeyShowerProps) => {
-    const [show, setShow] = useState(false);
-    return <input className='w-full' type={`${show ? "text" : "password"}`} value={key_} onClick={e => setShow(!show)}/>
-
+  const [show, setShow] = useState(false)
+  return <input className='w-full' type={`${show ? 'text' : 'password'}`} value={key_} onClick={e => setShow(!show)}/>
 }
 
 const Credential = () => {
+  const [createModalOpen, setCreateModalOpen] = useState(false)
+  const { data: credentials } = useCredentials()
 
-    const [createModalOpen, setCreateModalOpen] = useState(false);
-    const { data: credentials } = useCredentials();
+  console.log(credentials)
 
-    console.log(credentials);
-    
-
-    return (
+  return (
         <div className='p-4 w-full'>
             <div className='flex justify-between pb-4'>
                 <h1 className='font-bold text-lg'>Minhas Credenciais</h1>
@@ -41,7 +38,7 @@ const Credential = () => {
                 <TBody>
                     {
                         credentials?.map(credential => {
-                            return (
+                          return (
                                 <Tr key={credential.id}>
                                     <Td>{credential.eventCode}</Td>
                                     <Td>{credential.name}</Td>
@@ -49,14 +46,14 @@ const Credential = () => {
                                     <Td>{new Date(credential.createdAt).toLocaleDateString()}</Td>
                                     <Td><TrashButton useMutation={() => useDestroyCredential(credential.id)}/></Td>
                                 </Tr>
-                            )
+                          )
                         })
                     }
                 </TBody>
             </Table>
             <CreateCredentialModal open={createModalOpen} onClose={() => setCreateModalOpen(false)}/>
         </div>
-    )
+  )
 }
 
-export default Credential;
+export default Credential

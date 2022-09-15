@@ -1,64 +1,62 @@
-import { FormEvent, useEffect, useState } from "react";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useUpdatePlan } from "../../../hooks/plans-hooks";
-import { Button } from "../../Button";
+import { FormEvent, useEffect, useState } from 'react'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { useUpdatePlan } from '../../../hooks/plans-hooks'
+import { Button } from '../../Button'
 import CurrencyInput, {
-	CurrencyInputProps,
-	formatValue,
-} from "react-currency-input-field";
-import { useEventTypes } from "../../../hooks/event-types-hooks";
+  CurrencyInputProps,
+  formatValue
+} from 'react-currency-input-field'
+import { useEventTypes } from '../../../hooks/event-types-hooks'
 
-type EditPlanModalProps = {
-	plan?: {
-		id: string;
-		name: string;
-		description: string;
-		price: number;
-		events: string[];
-	};
-	onClose: Function;
-};
+interface EditPlanModalProps {
+  plan?: {
+    id: string
+    name: string
+    description: string
+    price: number
+    events: string[]
+  }
+  onClose: Function
+}
 
 export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
+  if (plan == null) return null
 
-	if (!plan) return null;
+  const NAME_DEFAULT_VALUE = plan.name
+  const DESCRIPTION_DEFAULT_VALUE = plan.description
+  const PRICE_DEFAULT_VALUE = plan.price
 
-	const NAME_DEFAULT_VALUE = plan.name;
-	const DESCRIPTION_DEFAULT_VALUE = plan.description;
-    const PRICE_DEFAULT_VALUE =  plan.price;
+  const { mutateAsync: update, isLoading } = useUpdatePlan(plan.id)
+  const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes()
 
-	const { mutateAsync: update, isLoading } = useUpdatePlan(plan.id);
-    const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes();
+  const [name, setName] = useState(NAME_DEFAULT_VALUE)
+  const [description, setDescription] = useState(DESCRIPTION_DEFAULT_VALUE)
+  const [price, setPrice] = useState<number | undefined>(PRICE_DEFAULT_VALUE)
+  const [events, setEvents] = useState<string[]>(plan.events)
 
-	const [name, setName] = useState(NAME_DEFAULT_VALUE);
-	const [description, setDescription] = useState(DESCRIPTION_DEFAULT_VALUE);
-	const [price, setPrice] = useState<number | undefined>(PRICE_DEFAULT_VALUE);
-    const [events, setEvents] = useState<string[]>(plan.events);
-    
+  const handleClose = () => {
+    setName(NAME_DEFAULT_VALUE)
+    setDescription(DESCRIPTION_DEFAULT_VALUE)
+    setPrice(PRICE_DEFAULT_VALUE)
+    setEvents([])
+    onClose()
+  }
 
-    const handleClose = () => {
-		setName(NAME_DEFAULT_VALUE);
-		setDescription(DESCRIPTION_DEFAULT_VALUE);
-		setPrice(PRICE_DEFAULT_VALUE);
-        setEvents([]);
-		onClose();
-	};
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (isLoading) return
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		if (isLoading) return;
+    await update({
+      name,
+      description,
+      price: price as number,
+      events
+    })
 
-		await update({
-			name,
-			description,
-			price: price as number,
-            events
-		});
+    handleClose()
+  }
 
-		handleClose();
-	};
-
-	return (
+  return (
 		<div className="absolute bg-black inset-0 bg-opacity-50 flex items-center justify-center">
 			<div className="bg-white rounded p-8 w-96">
 				<form className="space-y-4" onSubmit={handleSubmit}>
@@ -90,26 +88,26 @@ export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
                         <span className='text-gray-700 font-semibold'>Eventos</span>
                         <div className='flex flex-col space-y-1 h-32'>
                             {
-                                eventTypeLoading ? 
-                                <AiOutlineLoading3Quarters className='animate-spin'/>
-                                : null
+                                eventTypeLoading
+                                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
+                                  : null
                             }
                             {
                                 eventTypes?.map(event => {
-                                    return (
+                                  return (
                                         <div className='flex items-center space-x-2' key={event.code}>
                                             <input type='checkbox' checked={events?.includes(event.code)} onChange={e => {
-                                                if (e.target.checked) {
-                                                    setEvents([...events, event.code]);
-                                                } else {
-                                                    setEvents(events?.filter(str => str !== event.code))
-                                                }                          
+                                              if (e.target.checked) {
+                                                setEvents([...events, event.code])
+                                              } else {
+                                                setEvents(events?.filter(str => str !== event.code))
+                                              }
                                             }} className='cursor-pointer'/>
                                             <span>
                                                 {event.code}
                                             </span>
                                         </div>
-                                    )
+                                  )
                                 })
                             }
                         </div>
@@ -120,7 +118,7 @@ export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
 						</label>
 						<CurrencyInput
 							onValueChange={(_, __, values) => {
-								setPrice(Number(values?.float) * 100);
+							  setPrice(Number(values?.float) * 100)
 							}}
 							prefix="R$ "
 							allowDecimals
@@ -134,19 +132,21 @@ export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
 						<Button className="w-full" onClick={handleClose}>
 							Cancelar
 						</Button>
-						<Button 
+						<Button
 							className='w-full flex items-center justify-center'
 							type="submit"
 						>
-							{isLoading ? (
+							{isLoading
+							  ? (
 								<AiOutlineLoading3Quarters className="animate-spin"/>
-							) : (
-								"Salvar"
-							)}
+							    )
+							  : (
+							  'Salvar'
+							    )}
 						</Button>
 					</div>
 				</form>
 			</div>
 		</div>
-	);
-};
+  )
+}

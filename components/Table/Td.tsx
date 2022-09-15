@@ -1,14 +1,14 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
-type TdProps = {
-    children: ReactNode,
-    className?: string;
+interface TdProps {
+  children: ReactNode
+  className?: string
 }
 
 export const Td = ({ children, className }: TdProps) => {
-    return (
+  return (
         <td className={`p-3 text-sm text-gray-700 whitespace-nowrap ${className}`}>
             { children }
         </td>
-    )
+  )
 }

@@ -1,13 +1,13 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
-type TrProps = {
-    children: ReactNode
+interface TrProps {
+  children: ReactNode
 }
 
 export const Tr = ({ children }: TrProps) => {
-    return (
+  return (
         <tr className="odd:bg-white even:bg-gray-50">
             { children }
         </tr>
-    )
+  )
 }

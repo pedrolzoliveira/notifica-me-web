@@ -1,28 +1,27 @@
-import { useNotifications } from '../../hooks/notifications-hooks';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { Table, TBody, THead, Td, Th, Tr } from '../../components/Table';
-import { useInfo } from '../../hooks/auth-hooks';
-import { useRouter } from 'next/router';
+import { useNotifications } from '../../hooks/notifications-hooks'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { Table, TBody, THead, Td, Th, Tr } from '../../components/Table'
+import { useInfo } from '../../hooks/auth-hooks'
+import { useRouter } from 'next/router'
 
 const Notifications = () => {
+  const router = useRouter()
+  const { data: notifications, isLoading } = useNotifications()
+  const { data: info, isLoading: infoLoading } = useInfo()
 
-    const router = useRouter();
-    const { data: notifications, isLoading } = useNotifications();
-    const { data: info, isLoading: infoLoading } = useInfo();
-
-    if (isLoading) {
-        return (
+  if (isLoading) {
+    return (
             <div className='w-full h-screen flex items-center justify-center'>
                 <AiOutlineLoading3Quarters className='animate-spin h-20 w-20'/>
             </div>
-        )
-    } 
+    )
+  }
 
-    if (!info?.customer && !infoLoading) {
-        router.push('/signin')
-    }
+  if (((info?.customer) == null) && !infoLoading) {
+    router.push('/signin')
+  }
 
-    return (
+  return (
         <div className='p-4 w-full h-full space-y-4'>
             <h1 className='font-bold text-lg'>Notificações</h1>
             <Table className='block max-h-[90vh] overflow-y-scroll'>
@@ -37,20 +36,20 @@ const Notifications = () => {
                 <TBody className=''>
                     {
                         notifications?.map(notification => {
-                            return (
+                          return (
                                 <Tr key={notification.createdAt} >
                                     <Td className='font-semibold'>{notification.event.code}</Td>
                                     <Td>{notification.event.text}</Td>
                                     <Td>{notification.receiver.name}</Td>
                                     <Td>{new Date(notification.createdAt).toLocaleString()}</Td>
                                 </Tr>
-                            )
+                          )
                         })
                     }
                 </TBody>
             </Table>
         </div>
-    )
+  )
 }
 
-export default Notifications;
+export default Notifications

@@ -1,60 +1,58 @@
-import { useState, FormEvent } from 'react';
-import { useUpdateReceiver } from '../../../hooks/receivers-hooks';
-import { useEventTypes } from '../../../hooks/event-types-hooks';
-import { Button } from '../../Button';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { BiError } from 'react-icons/bi';
-import { Input } from '../../Input';
-import ReactInputMask from 'react-input-mask';
+import { useState, FormEvent } from 'react'
+import { useUpdateReceiver } from '../../../hooks/receivers-hooks'
+import { useEventTypes } from '../../../hooks/event-types-hooks'
+import { Button } from '../../Button'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { BiError } from 'react-icons/bi'
+import { Input } from '../../Input'
+import ReactInputMask from 'react-input-mask'
 
-type EditReceiverModalProps = {
-    receiver?: {
-        id: string;
-        name: string;
-        number: string;
-        messenger: 'whatsapp' | 'telegram' | 'sms'
-        events: {
-            id: string;
-            code: string;
-            receiverId: string;
-        }[],
-    }
-    onClose: Function;
+interface EditReceiverModalProps {
+  receiver?: {
+    id: string
+    name: string
+    number: string
+    messenger: 'whatsapp' | 'telegram' | 'sms'
+    events: Array<{
+      id: string
+      code: string
+      receiverId: string
+    }>
+  }
+  onClose: Function
 }
 
 export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps) => {
-    if (!receiver) return null;
+  if (receiver == null) return null
 
-    
-    const { mutateAsync: update, isLoading, error } = useUpdateReceiver(receiver.id);
-    const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes();
-    
-    const [name, setName] = useState(receiver.name);
-    const [events, setevents] = useState(receiver.events.map(event => event.code));
-    
-    const handlesubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (isLoading) return;
-        await update({
-            name,
-            events
-        });
-        handleClose();
-    }
-    
-    const handleNameChange = (e: any) => {
-        setName(e.target.value);
-    }
-    
-    
-    const handleClose = () => {
-        setName('');
-        onClose();
-    }
-    
-    if (!open) return null;
+  const { mutateAsync: update, isLoading, error } = useUpdateReceiver(receiver.id)
+  const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes()
 
-    return (
+  const [name, setName] = useState(receiver.name)
+  const [events, setevents] = useState(receiver.events.map(event => event.code))
+
+  const handlesubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (isLoading) return
+    await update({
+      name,
+      events
+    })
+    handleClose()
+  }
+
+  const handleNameChange = (e: any) => {
+    setName(e.target.value)
+  }
+
+  const handleClose = () => {
+    setName('')
+    onClose()
+  }
+
+  if (!open) return null
+
+  return (
         <div className='absolute bg-black inset-0 bg-opacity-50 flex items-center justify-center'>
             <div className='bg-white rounded p-8 w-96'>
                 <form className='space-y-4' onSubmit={handlesubmit}>
@@ -83,53 +81,51 @@ export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps)
                         <span className='text-gray-700 font-semibold'>Eventos</span>
                         <div className='flex flex-col space-y-1 h-60'>
                             {
-                                eventTypeLoading ? 
-                                <AiOutlineLoading3Quarters className='animate-spin'/>
-                                : null
+                                eventTypeLoading
+                                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
+                                  : null
                             }
                             {
                                 eventTypes?.map(event => {
-                                    return (
+                                  return (
                                         <div className='flex items-center space-x-2' key={event.code}>
                                             <input type='checkbox' checked={events.includes(event.code)} onChange={e => {
-                                                if (e.target.checked) {
-                                                    setevents([...events, event.code]);
-                                                } else {
-                                                    setevents(events.filter(str => str !== event.code))
-                                                }                          
+                                              if (e.target.checked) {
+                                                setevents([...events, event.code])
+                                              } else {
+                                                setevents(events.filter(str => str !== event.code))
+                                              }
                                             }} className='cursor-pointer'/>
                                             <span>
                                                 {event.code}
                                             </span>
                                         </div>
-                                    )
+                                  )
                                 })
                             }
                         </div>
                     </div>
                     {
-                        error ?
-                        <div className='flex text-red-600 space-x-2 items-center font-semibold'>
+                        error
+                          ? <div className='flex text-red-600 space-x-2 items-center font-semibold'>
                            <BiError/>
-                           <p>Error!</p> 
+                           <p>Error!</p>
                         </div>
-                        :
-                        null
+                          : null
                     }
                     <div className='space-x-4 w-full flex pt-4'>
                         <Button className='w-full' onClick={handleClose}>Cancelar</Button>
-                        <Button  className='w-full flex items-center justify-center' type='submit'>
+                        <Button className='w-full flex items-center justify-center' type='submit'>
                             {
-                                isLoading ? 
-                                <AiOutlineLoading3Quarters className='animate-spin'/>
-                                :
-                                'Salvar'
+                                isLoading
+                                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
+                                  : 'Salvar'
                             }
-                            
+
                         </Button>
                     </div>
                 </form>
             </div>
         </div>
-    )
+  )
 }

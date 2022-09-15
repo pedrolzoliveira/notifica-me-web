@@ -1,14 +1,14 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
-type ThProps = {
-    children: ReactNode;
-    className?: string;
+interface ThProps {
+  children: ReactNode
+  className?: string
 }
 
 export const Th = ({ children, className }: ThProps) => {
-    return (
+  return (
         <th className={`p-3 text-sm font-semibold tracking-wide text-left ${className}`}>
             { children }
         </th>
-    )
+  )
 }

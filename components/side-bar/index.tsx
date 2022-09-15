@@ -1,32 +1,28 @@
-import { OptionSideBar } from './OptionSideBar';
-import { BsFillGridFill, BsFillBellFill, BsFillPeopleFill } from 'react-icons/bs';
-import { BiMessageDetail } from 'react-icons/bi';
-import { FiHome } from 'react-icons/fi';
-import { FaRegIdCard } from 'react-icons/fa';
-
-import { useRouter } from 'next/router';
-import { useInfo } from '../../hooks/auth-hooks';
-
-
+import { OptionSideBar } from './OptionSideBar'
+import { BsFillGridFill, BsFillBellFill, BsFillPeopleFill } from 'react-icons/bs'
+import { BiMessageDetail } from 'react-icons/bi'
+import { FiHome } from 'react-icons/fi'
+import { FaRegIdCard } from 'react-icons/fa'
+import { useRouter } from 'next/router'
+import { useInfo } from '../../hooks/auth-hooks'
 
 export const SideBar = () => {
+  const router = useRouter()
 
-    const router = useRouter();
+  const { data: info } = useInfo()
 
-    const { data: info } = useInfo();
+  if (
+    [
+      '/signin',
+      '/signup'
+    ].includes(router.pathname)
+  ) return null
 
-    if (
-        [
-            '/signin',
-            '/signup'
-        ].includes(router.pathname)
-    ) return null;
-
-    return (
+  return (
         <div className='sticky top-0 left-0 h-screen sm:min-w-[210px] flex flex-col p-4 space-y-4 border-r justify-between'>
             {
-                info?.customer ?
-                <div>
+                ((info?.customer) != null)
+                  ? <div>
                     <OptionSideBar href='plans'>
                         <BsFillGridFill/>
                         <p className='hidden sm:block'>Meus Planos</p>
@@ -43,12 +39,12 @@ export const SideBar = () => {
                         <BsFillPeopleFill/>
                         <p className='hidden sm:block'>Recebedores</p>
                     </OptionSideBar>
-                </div> :
-                null
+                </div>
+                  : null
             }
             {
-                info?.admin ?
-                <div>
+                ((info?.admin) != null)
+                  ? <div>
                     <p>Admin</p>
                     <OptionSideBar href='admin/plans'>
                         <BsFillGridFill/>
@@ -62,9 +58,9 @@ export const SideBar = () => {
                         <FaRegIdCard/>
                         <p className='hidden sm:block whitespace-nowrap'>Credenciais</p>
                     </OptionSideBar>
-                </div> :
-                null
+                </div>
+                  : null
             }
         </div>
-    )
+  )
 }

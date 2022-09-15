@@ -1,42 +1,41 @@
-import { FormEvent, useState } from 'react';
-import { toast } from 'react-toastify';
-import { useInfo, useSignUpMutation } from '../../hooks/auth-hooks';
-import { Button } from '../../components/Button';
-import { Input } from '../../components/Input';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { FormEvent, useState } from 'react'
+import { toast } from 'react-toastify'
+import { useInfo, useSignUpMutation } from '../../hooks/auth-hooks'
+import { Button } from '../../components/Button'
+import { Input } from '../../components/Input'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 export const SignUp = () => {
+  const { mutateAsync: signUp, isLoading } = useSignUpMutation()
+  const { data: info } = useInfo()
+  const router = useRouter()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirmation, setPasswordConfirmation] = useState('')
 
-    const {  mutateAsync: signUp, isLoading } = useSignUpMutation();
-    const { data: info } = useInfo();
-    const router = useRouter();
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
-
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-            await signUp({
-                name,
-                email,
-                password
-            });
-            toast.success('Conta criada com sucesso! Redirecionando...');
-            router.push('/');
-        } catch(error) {
-            toast.error('Algo deu errado!');
-        }
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
+      await signUp({
+        name,
+        email,
+        password
+      })
+      toast.success('Conta criada com sucesso! Redirecionando...')
+      router.push('/')
+    } catch (error) {
+      toast.error('Algo deu errado!')
     }
+  }
 
-    if (info) {
-        router.push('/');
-    }
-    
-    return (
+  if (info != null) {
+    router.push('/')
+  }
+
+  return (
         <div className='absolute bg-black inset-0 bg-opacity-50 flex items-center justify-center'>
             <div className='bg-white rounded p-8 w-96'>
                 <form
@@ -79,12 +78,11 @@ export const SignUp = () => {
                         />
                     </div>
                     <div className='space-x-4 w-full flex pt-4'>
-                        <Button  className='w-full flex items-center justify-center' type='submit'>
+                        <Button className='w-full flex items-center justify-center' type='submit'>
                             {
-                                isLoading ? 
-                                <AiOutlineLoading3Quarters className='animate-spin'/>
-                                :
-                                'Criar conta'
+                                isLoading
+                                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
+                                  : 'Criar conta'
                             }
                         </Button>
                     </div>
@@ -94,7 +92,7 @@ export const SignUp = () => {
                 </form>
             </div>
         </div>
-    )
+  )
 }
 
-export default SignUp;
+export default SignUp
