@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { CreatePlanModal } from '../../components/modals/create-plans-modal'
 import { EditPlanModal } from '../../components/modals/edit-plan-modal'
 import { Button } from '../../components/Button'
-import { Table, THead, TBody, Th, Td } from '../../components/table'
+import { Table, THead, TBody, Th, Td } from '../../components/Table'
 import { usePlans, useDestroyPlan } from '../../hooks/plans-hooks'
 import { formataReal } from '../../utils/formataReal'
 import { TrashButton } from '../../components/TrashButton'
@@ -45,7 +45,7 @@ const Plans = () => {
                             <tr key={plan.id}>
                               <Td>{plan.name}</Td>
                               <Td>{plan.description}</Td>
-                              <Td className='space-x-2'>{plan.events.map(event => <Badge>{event.code}</Badge>)}</Td>
+                              <Td className='space-x-2'>{plan.events.map(event => <Badge key={event.code}>{event.code}</Badge>)}</Td>
                               <Td>{formataReal(plan.price)}</Td>
                               <Td>{new Date(plan.createdAt).toLocaleString()}</Td>
                               <Td className='flex justify-center space-x-4'>
