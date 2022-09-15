@@ -57,8 +57,10 @@ const Events = () => {
                     }
                 </TBody>
             </Table>
-            <CreateEventTypesModal open={createModalOpen} onClose={() => setCreateModalOpen(false)}/>
-            <EditEventTypeModal eventType={editEventType} onClose={() => setEditEventType(undefined)}/>
+            <CreateEventTypesModal open={createModalOpen}
+            onClose={() => setCreateModalOpen(false)}/>
+            <EditEventTypeModal eventType={editEventType}
+            onClose={() => setEditEventType(undefined)}/>
         </div>
   )
 }
