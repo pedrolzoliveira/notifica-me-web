@@ -7,8 +7,8 @@ interface TableProps {
 
 export const Table = ({ children, className }: TableProps) => {
   return (
-        <table className={`w-full shadow border ${className}`}>
-            {children}
-        </table>
+    <table className={`w-full shadow border ${className}`}>
+      {children}
+    </table>
   )
 }

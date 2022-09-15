@@ -18,52 +18,52 @@ const EventTypes = () => {
 
   if (isLoading) {
     return (
-            <div className='w-full h-screen flex items-center justify-center'>
-                <AiOutlineLoading3Quarters className='animate-spin h-20 w-20'/>
-            </div>
+      <div className='w-full h-screen flex items-center justify-center'>
+        <AiOutlineLoading3Quarters className='animate-spin h-20 w-20'/>
+      </div>
     )
   }
 
   return (
-        <div className='p-4 w-full'>
-            <div className='flex justify-between pb-4'>
-                <h1 className='font-bold text-lg'>Tipos de Eventos</h1>
-                <Button onClick={() => { setCreateModalOpen(true) }}>Adicionar</Button>
-            </div>
-            <Table>
-                <THead>
-                    <tr>
-                        <Th className='w-36'>code</Th>
-                        <Th className='w-44'>Nome</Th>
-                        <Th>Descrição</Th>
-                        <Th className='w-48'>Criado em</Th>
-                        <Th className='w-12'>Ações</Th>
-                    </tr>
-                </THead>
-                <TBody>
-                    {
+    <div className='p-4 w-full'>
+      <div className='flex justify-between pb-4'>
+        <h1 className='font-bold text-lg'>Tipos de Eventos</h1>
+        <Button onClick={() => { setCreateModalOpen(true) }}>Adicionar</Button>
+      </div>
+      <Table>
+        <THead>
+          <tr>
+            <Th className='w-36'>code</Th>
+            <Th className='w-44'>Nome</Th>
+            <Th>Descrição</Th>
+            <Th className='w-48'>Criado em</Th>
+            <Th className='w-12'>Ações</Th>
+          </tr>
+        </THead>
+        <TBody>
+          {
                         eventTypes?.map(eventType => {
                           return (
-                                <Tr key={eventType.code}>
-                                    <Td className='font-semibold'>{eventType.code}</Td>
-                                    <Td>{eventType.name}</Td>
-                                    <Td>{eventType.description}</Td>
-                                    <Td>{new Date(eventType.createdAt).toLocaleString()}</Td>
-                                    <Td className='flex justify-center space-x-4'>
-                                        <button className='p-2 rounded hover:bg-blue-100' onClick={() => setEditEventType(eventType)} >
-                                            <AiOutlineEdit/>
-                                        </button>
-                                        <TrashButton useMutation={() => useDestroyEventType(eventType.code)}/>
-                                    </Td>
-                                </Tr>
+                            <Tr key={eventType.code}>
+                              <Td className='font-semibold'>{eventType.code}</Td>
+                              <Td>{eventType.name}</Td>
+                              <Td>{eventType.description}</Td>
+                              <Td>{new Date(eventType.createdAt).toLocaleString()}</Td>
+                              <Td className='flex justify-center space-x-4'>
+                                <button className='p-2 rounded hover:bg-blue-100' onClick={() => setEditEventType(eventType)} >
+                                  <AiOutlineEdit/>
+                                </button>
+                                <TrashButton useMutation={() => useDestroyEventType(eventType.code)}/>
+                              </Td>
+                            </Tr>
                           )
                         })
                     }
-                </TBody>
-            </Table>
-            <CreateEventTypesModal open={createModalOpen} onClose={() => setCreateModalOpen(false)}/>
-            <EditEventTypeModal eventType={editEventType} onClose={() => setEditEventType(undefined)}/>
-        </div>
+        </TBody>
+      </Table>
+      <CreateEventTypesModal open={createModalOpen} onClose={() => setCreateModalOpen(false)}/>
+      <EditEventTypeModal eventType={editEventType} onClose={() => setEditEventType(undefined)}/>
+    </div>
   )
 }
 

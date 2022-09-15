@@ -6,8 +6,8 @@ interface TBodyProps {
 }
 export const TBody = ({ children, className }: TBodyProps) => {
   return (
-        <tbody className={className}>
-            { children }
-        </tbody>
+    <tbody className={className}>
+      { children }
+    </tbody>
   )
 }

@@ -22,52 +22,52 @@ const Plans = () => {
   }>()
 
   return (
-        <div className='p-4 w-full'>
-            <div className='flex justify-between pb-4'>
-                <h1 className='font-bold text-lg'>Meus Planos</h1>
-                <Button onClick={() => setCreateModalOpen(true)}>Adicionar</Button>
-            </div>
-            <Table>
-                <THead>
-                    <tr>
-                        <Th>Nome</Th>
-                        <Th>Descrição</Th>
-                        <Th>Eventos</Th>
-                        <Th>Preço</Th>
-                        <Th>Criado em</Th>
-                        <Th>Ações</Th>
-                    </tr>
-                </THead>
-                <TBody>
-                    {
+    <div className='p-4 w-full'>
+      <div className='flex justify-between pb-4'>
+        <h1 className='font-bold text-lg'>Meus Planos</h1>
+        <Button onClick={() => setCreateModalOpen(true)}>Adicionar</Button>
+      </div>
+      <Table>
+        <THead>
+          <tr>
+            <Th>Nome</Th>
+            <Th>Descrição</Th>
+            <Th>Eventos</Th>
+            <Th>Preço</Th>
+            <Th>Criado em</Th>
+            <Th>Ações</Th>
+          </tr>
+        </THead>
+        <TBody>
+          {
                         plans?.map(plan => {
                           return (
-                                <tr key={plan.id}>
-                                    <Td>{plan.name}</Td>
-                                    <Td>{plan.description}</Td>
-                                    <Td className='space-x-2'>{plan.events.map(event => <Badge>{event.code}</Badge>)}</Td>
-                                    <Td>{formataReal(plan.price)}</Td>
-                                    <Td>{new Date(plan.createdAt).toLocaleString()}</Td>
-                                    <Td className='flex justify-center space-x-4'>
-                                        <button className='p-2 rounded hover:bg-blue-100' onClick={
+                            <tr key={plan.id}>
+                              <Td>{plan.name}</Td>
+                              <Td>{plan.description}</Td>
+                              <Td className='space-x-2'>{plan.events.map(event => <Badge>{event.code}</Badge>)}</Td>
+                              <Td>{formataReal(plan.price)}</Td>
+                              <Td>{new Date(plan.createdAt).toLocaleString()}</Td>
+                              <Td className='flex justify-center space-x-4'>
+                                <button className='p-2 rounded hover:bg-blue-100' onClick={
                                             () => setEditPlan({
                                               ...plan,
                                               events: plan.events.map(event => event.code)
                                             })
                                         }>
-                                            <AiOutlineEdit/>
-                                        </button>
-                                        <TrashButton useMutation={() => useDestroyPlan(plan.id)}/>
-                                    </Td>
-                                </tr>
+                                  <AiOutlineEdit/>
+                                </button>
+                                <TrashButton useMutation={() => useDestroyPlan(plan.id)}/>
+                              </Td>
+                            </tr>
                           )
                         })
                     }
-                </TBody>
-            </Table>
-            <EditPlanModal plan={editPlan} onClose={() => setEditPlan(undefined)}/>
-            <CreatePlanModal open={createModalOpen} onClose={() => setCreateModalOpen(false)}/>
-        </div>
+        </TBody>
+      </Table>
+      <EditPlanModal plan={editPlan} onClose={() => setEditPlan(undefined)}/>
+      <CreatePlanModal open={createModalOpen} onClose={() => setCreateModalOpen(false)}/>
+    </div>
   )
 }
 

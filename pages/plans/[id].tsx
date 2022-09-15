@@ -9,14 +9,14 @@ export default () => {
 
   if (isLoading) {
     return (
-            <div>Carregando...</div>
+      <div>Carregando...</div>
     )
   }
 
   return (
-        <div>
-            <h1>{plan?.name}</h1>
-            <p>{plan?.description}</p>
-        </div>
+    <div>
+      <h1>{plan?.name}</h1>
+      <p>{plan?.description}</p>
+    </div>
   )
 }

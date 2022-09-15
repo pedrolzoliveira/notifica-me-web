@@ -11,8 +11,8 @@ export const Modal = ({ children, open }: ModalProps) => {
   if (!open) return null
 
   return (
-        <div>
-            { children }
-        </div>
+    <div>
+      { children }
+    </div>
   )
 }

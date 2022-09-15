@@ -5,7 +5,7 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 export const TrashButton = (props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & { useMutation: () => UseMutationResult<boolean, unknown, void, unknown> }) => {
   const [focused, setFocused] = useState(false)
-  const { mutateAsync: destroy, isLoading, error } = props.useMutation?.()
+  const { mutateAsync: destroy, isLoading } = props.useMutation?.()
 
   const handleClick = async (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     try {
@@ -26,12 +26,12 @@ export const TrashButton = (props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLBu
   }
 
   return (
-        <button {...props} onClick={handleClick} className={`p-2 ${(focused || isLoading) ? 'bg-red-500 text-white rounded' : ''}`}>
-            {
-                isLoading
-                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
-                  : <BiTrash/>
-            }
-        </button>
+    <button {...props} onClick={handleClick} className={`p-2 ${(focused || isLoading) ? 'bg-red-500 text-white rounded' : ''}`}>
+      {
+        isLoading
+          ? <AiOutlineLoading3Quarters className='animate-spin'/>
+          : <BiTrash/>
+      }
+    </button>
   )
 }
