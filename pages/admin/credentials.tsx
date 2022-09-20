@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button } from '../../components/Button'
-import { Table, THead, TBody, Tr, Td, Th } from '../../components/table'
+import { Table, THead, TBody, Tr, Td, Th } from '../../components/Table'
 import { CreateCredentialModal } from '../../components/modals/create-credential-modal'
 import { useCredentials, useDestroyCredential } from '../../hooks/credentials-hooks'
 import { TrashButton } from '../../components/TrashButton'

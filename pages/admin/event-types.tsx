@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useEventTypes, useDestroyEventType } from '../../hooks/event-types-hooks'
 import { AiOutlineLoading3Quarters, AiOutlineEdit } from 'react-icons/ai'
-import { Table, TBody, THead, Td, Th, Tr } from '../../components/table'
+import { Table, TBody, THead, Td, Th, Tr } from '../../components/Table'
 import { Button } from '../../components/Button'
 import { CreateEventTypesModal } from '../../components/modals/create-event-types-modal/create-event-types-modal'
 import { EditEventTypeModal } from '../../components/modals/edit-event-types-modal'
