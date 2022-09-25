@@ -1,11 +1,8 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { useUpdatePlan } from '../../../hooks/plans-hooks'
 import { Button } from '../../Button'
-import CurrencyInput, {
-  CurrencyInputProps,
-  formatValue
-} from 'react-currency-input-field'
+import CurrencyInput from 'react-currency-input-field'
 import { useEventTypes } from '../../../hooks/event-types-hooks'
 
 interface EditPlanModalProps {
@@ -27,7 +24,7 @@ export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
   const PRICE_DEFAULT_VALUE = plan.price
 
   const { mutateAsync: update, isLoading } = useUpdatePlan(plan.id)
-  const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes()
+  const { data: eventTypesPaylopad, isLoading: eventTypeLoading } = useEventTypes()
 
   const [name, setName] = useState(NAME_DEFAULT_VALUE)
   const [description, setDescription] = useState(DESCRIPTION_DEFAULT_VALUE)
@@ -70,46 +67,46 @@ export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
             <input
             type="text"
             value={name}
-							onChange={(e) => setName(e.target.value)}
-							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
-						/>
+            onChange={(e) => setName(e.target.value)}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+            />
           </div>
           <div className="pt-4">
             <label htmlFor="name" className="text-gray-700 font-semibold">
               Descrição
             </label>
             <textarea
-							value={description}
-							onChange={(e) => setDescription(e.target.value)}
-							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-						/>
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
           </div>
           <div>
             <span className='text-gray-700 font-semibold'>Eventos</span>
             <div className='flex flex-col space-y-1 h-32'>
               {
-                                eventTypeLoading
-                                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
-                                  : null
-                            }
+                eventTypeLoading
+                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
+                  : null
+              }
               {
-                                eventTypes?.map(event => {
-                                  return (
-                                    <div className='flex items-center space-x-2' key={event.code}>
-                                      <input type='checkbox' checked={events?.includes(event.code)} onChange={e => {
-                                        if (e.target.checked) {
-                                          setEvents([...events, event.code])
-                                        } else {
-                                          setEvents(events?.filter(str => str !== event.code))
-                                        }
-                                      }} className='cursor-pointer'/>
-                                      <span>
-                                        {event.code}
-                                      </span>
-                                    </div>
-                                  )
-                                })
-                            }
+                eventTypesPaylopad?.eventTypes.map(event => {
+                  return (
+                    <div className='flex items-center space-x-2' key={event.code}>
+                      <input type='checkbox' checked={events?.includes(event.code)} onChange={e => {
+                        if (e.target.checked) {
+                          setEvents([...events, event.code])
+                        } else {
+                          setEvents(events?.filter(str => str !== event.code))
+                        }
+                      }} className='cursor-pointer'/>
+                      <span>
+                        {event.code}
+                      </span>
+                    </div>
+                  )
+                })
+              }
             </div>
           </div>
           <div>
@@ -117,32 +114,35 @@ export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
               Preço
             </label>
             <CurrencyInput
-							onValueChange={(_, __, values) => {
-							  setPrice(Number(values?.float) * 100)
-							}}
-							prefix="R$ "
-							allowDecimals
-							allowNegativeValue={false}
-							defaultValue={PRICE_DEFAULT_VALUE / 100}
-							placeholder="R$"
-							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-						/>
+            onValueChange={(_, __, values) => {
+              setPrice(Number(values?.float) * 100)
+            }}
+            prefix="R$ "
+            allowDecimals
+            allowNegativeValue={false}
+            defaultValue={PRICE_DEFAULT_VALUE / 100}
+            placeholder="R$"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
           </div>
           <div className="space-x-4 w-full flex pt-4">
             <Button className="w-full" onClick={handleClose}>
               Cancelar
             </Button>
             <Button
-							className='w-full flex items-center justify-center'
-							type="submit"
-						>
-              {isLoading
-							  ? (
-  <AiOutlineLoading3Quarters className="animate-spin"/>
-							    )
-							  : (
-							  'Salvar'
-							    )}
+            className='w-full flex items-center justify-center'
+            type="submit"
+            >
+              {
+                isLoading
+                  ? (
+                    <AiOutlineLoading3Quarters className="animate-spin"/>
+                    )
+                  : (
+                      'Salvar'
+                    )
+              }
+
             </Button>
           </div>
         </form>

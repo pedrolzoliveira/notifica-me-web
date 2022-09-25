@@ -21,7 +21,11 @@ export const TrashButton = (props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLBu
       }, 3000)
       return
     } catch (error) {
-      toast.error('Algo deu errado!')
+      if (error instanceof Error) {
+        toast.error(error.message)
+      } else {
+        toast.error('Algo deu errado!')
+      }
     }
   }
 
