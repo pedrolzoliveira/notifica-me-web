@@ -1,37 +1,46 @@
-import { AxiosResponse } from 'axios'
-import { API } from './api'
+import { API, NotificaMeResponse } from './api'
 
 export async function find(id: string) {
   const response = await API.get<{
-    plan: {
-      id: string
-      name: string
-      description: string
-      price: number
-      createdAt: string
-      updatedAt: string
+    ok: boolean
+    message: string
+    payload: {
+      plan: {
+        id: string
+        name: string
+        description: string
+        price: number
+        createdAt: string
+        updatedAt: string
+      }
     }
   }>(`/plans?id=${id}`)
-  return response.data.plan
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 export async function findAll() {
   const response = await API.get<{
-    plans: Array<{
-      id: string
-      name: string
-      description: string
-      price: number
-      createdAt: string
-      updatedAt: string
-      events: Array<{
-        code: string
+    ok: boolean
+    message: string
+    payload: {
+      plans: Array<{
+        id: string
         name: string
         description: string
+        price: number
+        createdAt: string
+        updatedAt: string
+        events: Array<{
+          code: string
+          name: string
+          description: string
+        }>
       }>
-    }>
+    }
   }>('/plans')
-  return response.data.plans
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 interface createParams {
@@ -41,7 +50,7 @@ interface createParams {
   events: string[]
 }
 export async function create(params: createParams) {
-  const response = await API.post<typeof params, AxiosResponse<{
+  const response = await API.post<typeof params, NotificaMeResponse<{
     plan: {
       id: string
       name: string
@@ -51,14 +60,15 @@ export async function create(params: createParams) {
       updatedAt: string
     }
   }>>('/plans', params)
-  return response.data.plan
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 export async function destroy(id: string) {
   const response = await API.delete('/plans', {
     data: { id }
   })
-  return response.status === 200
+  return response.data.ok
 }
 
 interface updateParams {
@@ -69,7 +79,7 @@ interface updateParams {
   price?: number
 }
 export async function update(params: updateParams) {
-  const response = await API.put<typeof params, AxiosResponse<{
+  const response = await API.put<typeof params, NotificaMeResponse<{
     plan: {
       id: string
       name: string
@@ -82,5 +92,6 @@ export async function update(params: updateParams) {
       updatedAt: string
     }
   }>>('/plans', params)
-  return response.data.plan
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }

@@ -5,9 +5,9 @@ import { useInfo } from '../hooks/auth-hooks'
 const Home: NextPage = () => {
   const router = useRouter()
 
-  const { data: info, isLoading: infoLoading } = useInfo()
+  const { data: infoPayload, isLoading: infoLoading } = useInfo()
 
-  if (((info?.customer) == null) && !infoLoading) {
+  if (((infoPayload?.customer) == null) && !infoLoading) {
     router.push('/signin')
   }
 

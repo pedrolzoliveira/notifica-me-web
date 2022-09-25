@@ -1,5 +1,4 @@
-import { AxiosResponse } from 'axios'
-import { API } from './api'
+import { API, NotificaMeResponse } from './api'
 
 interface signInParams {
   email: string
@@ -24,66 +23,70 @@ interface signUpParamsAdmin {
 }
 
 export async function signIn(data: signInParams) {
-  const response = await API.post<typeof data, AxiosResponse<{
+  const response = await API.post<typeof data, NotificaMeResponse<{
     customer: {
       id: string
       email: string
       name: string
     }
   }>>('/auth/signin', data)
-  if (response.status !== 200) throw new Error('SignIn error')
-  return response.data
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 export async function SignUp(data: signUpParams) {
-  const response = await API.post<typeof data, AxiosResponse<{
+  const response = await API.post<typeof data, NotificaMeResponse<{
     customer: {
       id: string
       email: string
       name: string
     }
   }>>('/auth/signup', data)
-  if (response.status !== 201) throw new Error('SignUp error')
-  return response.data
+  if (response.data.ok) throw new Error('SignUp error')
+  return response.data.payload
 }
 
 export async function signInAdmin(data: signInParamsAdmin) {
-  const response = await API.post<typeof data, AxiosResponse<{
+  const response = await API.post<typeof data, NotificaMeResponse<{
     admin: {
       id: string
       email: string
       name: string
     }
   }>>('/auth/admin/signin', data)
-  if (response.status !== 200) throw new Error('SignIn error')
-  return response.data
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 export async function SignUpAdmin(data: signUpParamsAdmin) {
-  const response = await API.post<typeof data, AxiosResponse<{
+  const response = await API.post<typeof data, NotificaMeResponse<{
     admin: {
       id: string
       email: string
       name: string
     }
   }>>('/auth/admin/signup', data)
-  if (response.status !== 201) throw new Error('SignUp error')
-  return response.data
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 export async function info() {
   const response = await API.get<{
-    customer?: {
-      id: string
-      name: string
-      email: string
-    }
-    admin?: {
-      id: string
-      name: string
-      email: string
+    ok: boolean
+    message: string
+    payload: {
+      customer?: {
+        id: string
+        name: string
+        email: string
+      }
+      admin?: {
+        id: string
+        name: string
+        email: string
+      }
     }
   }>('/auth/info')
-  if (response.status !== 200) throw new Error('Info error')
-  return response.data
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }

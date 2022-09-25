@@ -15,9 +15,7 @@ const KeyShower = ({ key_ }: KeyShowerProps) => {
 
 const Credential = () => {
   const [createModalOpen, setCreateModalOpen] = useState(false)
-  const { data: credentials } = useCredentials()
-
-  console.log(credentials)
+  const { data: payload } = useCredentials()
 
   return (
     <div className='p-4 w-full'>
@@ -37,18 +35,18 @@ const Credential = () => {
         </THead>
         <TBody>
           {
-                        credentials?.map(credential => {
-                          return (
-                            <Tr key={credential.id}>
-                              <Td>{credential.eventCode}</Td>
-                              <Td>{credential.name}</Td>
-                              <Td><KeyShower key_={credential.key}/></Td>
-                              <Td>{new Date(credential.createdAt).toLocaleDateString()}</Td>
-                              <Td><TrashButton useMutation={() => useDestroyCredential(credential.id)}/></Td>
-                            </Tr>
-                          )
-                        })
-                    }
+            payload?.credentials.map(credential => {
+              return (
+                <Tr key={credential.id}>
+                  <Td>{credential.eventCode}</Td>
+                  <Td>{credential.name}</Td>
+                  <Td><KeyShower key_={credential.key}/></Td>
+                  <Td>{new Date(credential.createdAt).toLocaleDateString()}</Td>
+                  <Td><TrashButton useMutation={() => useDestroyCredential(credential.id)}/></Td>
+                </Tr>
+              )
+            })
+          }
         </TBody>
       </Table>
       <CreateCredentialModal open={createModalOpen} onClose={() => setCreateModalOpen(false)}/>

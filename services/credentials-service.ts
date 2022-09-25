@@ -1,5 +1,4 @@
-import { AxiosResponse } from 'axios'
-import { API } from './api'
+import { API, NotificaMeResponse } from './api'
 
 export interface CreateParams {
   code: string
@@ -7,7 +6,7 @@ export interface CreateParams {
 }
 
 export async function create(params: CreateParams) {
-  const response = await API.post<typeof params, AxiosResponse<{
+  const response = await API.post<typeof params, NotificaMeResponse<{
     credential: {
       id: string
       name: string
@@ -16,25 +15,31 @@ export async function create(params: CreateParams) {
       eventCode: string
     }
   }>>('/credentials', params)
-  return response.data.credential
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 export async function findAll() {
   const response = await API.get<{
-    credentials: Array<{
-      id: string
-      name: string
-      key: string
-      createdAt: string
-      eventCode: string
-    }>
+    ok: boolean
+    message: string
+    payload: {
+      credentials: Array<{
+        id: string
+        name: string
+        key: string
+        createdAt: string
+        eventCode: string
+      }>
+    }
   }>('/credentials')
-  return response.data.credentials
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 export async function destroy(id: string) {
   const response = await API.delete('/credentials', {
     data: { id }
   })
-  return response.status === 200
+  return response.data.ok
 }

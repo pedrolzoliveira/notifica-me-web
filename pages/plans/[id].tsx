@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router'
 import { usePlan } from '../../hooks/plans-hooks'
 
+// eslint-disable-next-line react/display-name
 export default () => {
   const router = useRouter()
   const { id } = router.query
 
-  const { data: plan, isLoading } = usePlan(id as string)
+  const { data: payload, isLoading } = usePlan(id as string)
 
   if (isLoading) {
     return (
@@ -15,8 +16,8 @@ export default () => {
 
   return (
     <div>
-      <h1>{plan?.name}</h1>
-      <p>{plan?.description}</p>
+      <h1>{payload?.plan.name}</h1>
+      <p>{payload?.plan.description}</p>
     </div>
   )
 }

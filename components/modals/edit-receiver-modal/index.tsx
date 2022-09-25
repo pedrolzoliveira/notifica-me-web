@@ -64,63 +64,63 @@ export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps)
           <div>
             <label htmlFor='type' className='text-gray-700 font-semibold'>Tipo</label>
             <Input
-                        value={receiver.messenger}
-                        readOnly
-                        />
+              value={receiver.messenger}
+              readOnly
+              />
           </div>
           <div>
             <label htmlFor='number' className='text-gray-700 font-semibold'>Número</label>
             <ReactInputMask
-                        mask={'+99 (99) 99999-9999'}
-                        type='text'
-                        className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
-                        value={receiver.number}
-                        readOnly/>
+              mask={'+99 (99) 99999-9999'}
+              type='text'
+              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+              value={receiver.number}
+              readOnly/>
           </div>
           <div>
             <span className='text-gray-700 font-semibold'>Eventos</span>
             <div className='flex flex-col space-y-1 h-60'>
               {
-                                eventTypeLoading
-                                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
-                                  : null
-                            }
+                eventTypeLoading
+                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
+                  : null
+              }
               {
-                                eventTypes?.map(event => {
-                                  return (
-                                    <div className='flex items-center space-x-2' key={event.code}>
-                                      <input type='checkbox' checked={events.includes(event.code)} onChange={e => {
-                                        if (e.target.checked) {
-                                          setevents([...events, event.code])
-                                        } else {
-                                          setevents(events.filter(str => str !== event.code))
-                                        }
-                                      }} className='cursor-pointer'/>
-                                      <span>
-                                        {event.code}
-                                      </span>
-                                    </div>
-                                  )
-                                })
-                            }
+                eventTypes?.map(event => {
+                  return (
+                    <div className='flex items-center space-x-2' key={event.code}>
+                      <input type='checkbox' checked={events.includes(event.code)} onChange={e => {
+                        if (e.target.checked) {
+                          setevents([...events, event.code])
+                        } else {
+                          setevents(events.filter(str => str !== event.code))
+                        }
+                      }} className='cursor-pointer'/>
+                      <span>
+                        {event.code}
+                      </span>
+                    </div>
+                  )
+                })
+              }
             </div>
           </div>
           {
-                        error
-                          ? <div className='flex text-red-600 space-x-2 items-center font-semibold'>
-                            <BiError/>
-                            <p>Error!</p>
-                          </div>
-                          : null
-                    }
+            error
+              ? <div className='flex text-red-600 space-x-2 items-center font-semibold'>
+                <BiError/>
+                <p>Error!</p>
+              </div>
+              : null
+          }
           <div className='space-x-4 w-full flex pt-4'>
             <Button className='w-full' onClick={handleClose}>Cancelar</Button>
             <Button className='w-full flex items-center justify-center' type='submit'>
               {
-                                isLoading
-                                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
-                                  : 'Salvar'
-                            }
+                isLoading
+                  ? <AiOutlineLoading3Quarters className='animate-spin'/>
+                  : 'Salvar'
+              }
 
             </Button>
           </div>

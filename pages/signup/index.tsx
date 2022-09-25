@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 
 export const SignUp = () => {
   const { mutateAsync: signUp, isLoading } = useSignUpMutation()
-  const { data: info } = useInfo()
+  const { data: infoPayload } = useInfo()
   const router = useRouter()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -31,7 +31,7 @@ export const SignUp = () => {
     }
   }
 
-  if (info != null) {
+  if (infoPayload != null) {
     router.push('/')
   }
 

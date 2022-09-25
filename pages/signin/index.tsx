@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 
 export const SignIn = () => {
   const { mutateAsync: signIn, isLoading } = useSignInMutation()
-  const { data: info } = useInfo()
+  const { data: infoPayload } = useInfo()
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -28,7 +28,7 @@ export const SignIn = () => {
     }
   }
 
-  if (info != null) {
+  if (infoPayload != null) {
     router.push('/')
   }
 

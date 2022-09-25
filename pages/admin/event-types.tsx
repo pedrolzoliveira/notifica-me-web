@@ -14,7 +14,7 @@ const EventTypes = () => {
     name?: string
     description?: string
   }>()
-  const { data: eventTypes, isLoading } = useEventTypes()
+  const { data: payload, isLoading } = useEventTypes()
 
   if (isLoading) {
     return (
@@ -42,23 +42,23 @@ const EventTypes = () => {
         </THead>
         <TBody>
           {
-                        eventTypes?.map(eventType => {
-                          return (
-                            <Tr key={eventType.code}>
-                              <Td className='font-semibold'>{eventType.code}</Td>
-                              <Td>{eventType.name}</Td>
-                              <Td>{eventType.description}</Td>
-                              <Td>{new Date(eventType.createdAt).toLocaleString()}</Td>
-                              <Td className='flex justify-center space-x-4'>
-                                <button className='p-2 rounded hover:bg-blue-100' onClick={() => setEditEventType(eventType)} >
-                                  <AiOutlineEdit/>
-                                </button>
-                                <TrashButton useMutation={() => useDestroyEventType(eventType.code)}/>
-                              </Td>
-                            </Tr>
-                          )
-                        })
-                    }
+            payload?.eventTypes.map(eventType => {
+              return (
+                <Tr key={eventType.code}>
+                  <Td className='font-semibold'>{eventType.code}</Td>
+                  <Td>{eventType.name}</Td>
+                  <Td>{eventType.description}</Td>
+                  <Td>{new Date(eventType.createdAt).toLocaleString()}</Td>
+                  <Td className='flex justify-center space-x-4'>
+                    <button className='p-2 rounded hover:bg-blue-100' onClick={() => setEditEventType(eventType)} >
+                      <AiOutlineEdit/>
+                    </button>
+                    <TrashButton useMutation={() => useDestroyEventType(eventType.code)}/>
+                  </Td>
+                </Tr>
+              )
+            })
+          }
         </TBody>
       </Table>
       <CreateEventTypesModal open={createModalOpen} onClose={() => setCreateModalOpen(false)}/>

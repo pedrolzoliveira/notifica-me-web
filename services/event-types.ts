@@ -1,30 +1,39 @@
-import { AxiosResponse } from 'axios'
-import { API } from './api'
+import { API, NotificaMeResponse } from './api'
 
 export async function findAll() {
   const response = await API.get<{
-    eventTypes: Array<{
-      code: string
-      name: string
-      description?: string
-      createdAt: string
-      updatedAt: string
-    }>
+    ok: boolean
+    message: string
+    payload: {
+      eventTypes: Array<{
+        code: string
+        name: string
+        description?: string
+        createdAt: string
+        updatedAt: string
+      }>
+    }
   }>('/event-types')
-  return response.data.eventTypes
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 export async function find(code: string) {
   const response = await API.get<{
-    eventType: {
-      code: string
-      name: string
-      description?: string
-      createdAt: string
-      updatedAt: string
+    ok: boolean
+    message: string
+    payload: {
+      eventType: {
+        code: string
+        name: string
+        description?: string
+        createdAt: string
+        updatedAt: string
+      }
     }
   }>(`/event-types?code=${code}`)
-  return response.data.eventType
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 interface createParams {
@@ -34,7 +43,7 @@ interface createParams {
 }
 
 export async function create(params: createParams) {
-  const response = await API.post<typeof params, AxiosResponse<{
+  const response = await API.post<typeof params, NotificaMeResponse<{
     eventType: {
       code: string
       name: string
@@ -43,7 +52,8 @@ export async function create(params: createParams) {
       updatedAt: string
     }
   }>>('/event-types', params)
-  return response.data.eventType
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 interface destroyParams {
@@ -53,7 +63,7 @@ export async function destroy(params: destroyParams) {
   const response = await API.delete('/event-types', {
     data: params
   })
-  return response.status === 200
+  return response.data.ok
 }
 
 interface updateParams {
@@ -62,7 +72,7 @@ interface updateParams {
   description?: string
 }
 export async function update(params: updateParams) {
-  const response = await API.put<typeof params, AxiosResponse<{
+  const response = await API.put<typeof params, NotificaMeResponse<{
     eventType: {
       code: string
       name: string
@@ -71,5 +81,6 @@ export async function update(params: updateParams) {
       updatedAt: string
     }
   }>>('/event-types', params)
-  return response.data.eventType
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }

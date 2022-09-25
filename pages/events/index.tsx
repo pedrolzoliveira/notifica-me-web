@@ -15,8 +15,8 @@ const Events = () => {
     description?: string
   }>()
   const router = useRouter()
-  const { data: info, isLoading: infoLoading } = useInfo()
-  const { data: events, isLoading } = useEvents()
+  const { data: infoPayload, isLoading: infoLoading } = useInfo()
+  const { data: eventsPayload, isLoading } = useEvents()
 
   if (isLoading) {
     return (
@@ -26,7 +26,7 @@ const Events = () => {
     )
   }
 
-  if (((info?.customer) == null) && !infoLoading) {
+  if (((infoPayload?.customer) == null) && !infoLoading) {
     router.push('/signin')
   }
 
@@ -45,15 +45,15 @@ const Events = () => {
         </THead>
         <TBody>
           {
-      events?.map(event => {
-        return (
-          <Tr key={event.code}>
-            <Td className='font-semibold'>{event.code}</Td>
-            <Td>{event.text}</Td>
-            <Td>{new Date(event.createdAt).toLocaleString()}</Td>
-          </Tr>
-        )
-      })
+            eventsPayload?.events.map(event => {
+              return (
+                <Tr key={event.code}>
+                  <Td className='font-semibold'>{event.code}</Td>
+                  <Td>{event.text}</Td>
+                  <Td>{new Date(event.createdAt).toLocaleString()}</Td>
+                </Tr>
+              )
+            })
           }
         </TBody>
       </Table>

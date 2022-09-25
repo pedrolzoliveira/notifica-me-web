@@ -10,7 +10,7 @@ import { AiOutlineEdit } from 'react-icons/ai'
 import { Badge } from '../../components/Badge'
 
 const Plans = () => {
-  const { data: plans } = usePlans()
+  const { data: payload } = usePlans()
 
   const [createModalOpen, setCreateModalOpen] = useState(false)
   const [editPlan, setEditPlan] = useState<{
@@ -40,29 +40,29 @@ const Plans = () => {
         </THead>
         <TBody>
           {
-                        plans?.map(plan => {
-                          return (
-                            <tr key={plan.id}>
-                              <Td>{plan.name}</Td>
-                              <Td>{plan.description}</Td>
-                              <Td className='space-x-2'>{plan.events.map(event => <Badge key={event.code}>{event.code}</Badge>)}</Td>
-                              <Td>{formataReal(plan.price)}</Td>
-                              <Td>{new Date(plan.createdAt).toLocaleString()}</Td>
-                              <Td className='flex justify-center space-x-4'>
-                                <button className='p-2 rounded hover:bg-blue-100' onClick={
-                                            () => setEditPlan({
-                                              ...plan,
-                                              events: plan.events.map(event => event.code)
-                                            })
-                                        }>
-                                  <AiOutlineEdit/>
-                                </button>
-                                <TrashButton useMutation={() => useDestroyPlan(plan.id)}/>
-                              </Td>
-                            </tr>
-                          )
-                        })
-                    }
+            payload?.plans.map(plan => {
+              return (
+                <tr key={plan.id}>
+                  <Td>{plan.name}</Td>
+                  <Td>{plan.description}</Td>
+                  <Td className='space-x-2'>{plan.events.map(event => <Badge key={event.code}>{event.code}</Badge>)}</Td>
+                  <Td>{formataReal(plan.price)}</Td>
+                  <Td>{new Date(plan.createdAt).toLocaleString()}</Td>
+                  <Td className='flex justify-center space-x-4'>
+                    <button className='p-2 rounded hover:bg-blue-100' onClick={
+                                () => setEditPlan({
+                                  ...plan,
+                                  events: plan.events.map(event => event.code)
+                                })
+                            }>
+                      <AiOutlineEdit/>
+                    </button>
+                    <TrashButton useMutation={() => useDestroyPlan(plan.id)}/>
+                  </Td>
+                </tr>
+              )
+            })
+          }
         </TBody>
       </Table>
       <EditPlanModal plan={editPlan} onClose={() => setEditPlan(undefined)}/>

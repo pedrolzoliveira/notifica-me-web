@@ -6,8 +6,8 @@ import { useRouter } from 'next/router'
 
 const Notifications = () => {
   const router = useRouter()
-  const { data: notifications, isLoading } = useNotifications()
-  const { data: info, isLoading: infoLoading } = useInfo()
+  const { data: notificationsPayload, isLoading } = useNotifications()
+  const { data: infoPayload, isLoading: infoLoading } = useInfo()
 
   if (isLoading) {
     return (
@@ -17,7 +17,7 @@ const Notifications = () => {
     )
   }
 
-  if (((info?.customer) == null) && !infoLoading) {
+  if (((infoPayload?.customer) == null) && !infoLoading) {
     router.push('/signin')
   }
 
@@ -35,17 +35,17 @@ const Notifications = () => {
         </THead>
         <TBody className=''>
           {
-                        notifications?.map(notification => {
-                          return (
-                            <Tr key={notification.createdAt} >
-                              <Td className='font-semibold'>{notification.event.code}</Td>
-                              <Td>{notification.event.text}</Td>
-                              <Td>{notification.receiver.name}</Td>
-                              <Td>{new Date(notification.createdAt).toLocaleString()}</Td>
-                            </Tr>
-                          )
-                        })
-                    }
+            notificationsPayload?.notifications.map(notification => {
+              return (
+                <Tr key={notification.createdAt} >
+                  <Td className='font-semibold'>{notification.event.code}</Td>
+                  <Td>{notification.event.text}</Td>
+                  <Td>{notification.receiver.name}</Td>
+                  <Td>{new Date(notification.createdAt).toLocaleString()}</Td>
+                </Tr>
+              )
+            })
+          }
         </TBody>
       </Table>
     </div>

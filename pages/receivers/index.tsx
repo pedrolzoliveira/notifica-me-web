@@ -14,8 +14,8 @@ import { useRouter } from 'next/router'
 
 const Receivers = () => {
   const router = useRouter()
-  const { data: receivers, isLoading } = useReceivers()
-  const { data: info, isLoading: infoLoading } = useInfo()
+  const { data: receiversPayload, isLoading } = useReceivers()
+  const { data: infoPayload, isLoading: infoLoading } = useInfo()
   const [editReceiver, setEditReceiver] = useState<{
     id: string
     name: string
@@ -37,7 +37,7 @@ const Receivers = () => {
     )
   }
 
-  if (((info?.customer) == null) && !infoLoading) {
+  if (((infoPayload?.customer) == null) && !infoLoading) {
     router.push('/signin')
   }
 
@@ -59,35 +59,35 @@ const Receivers = () => {
           </THead>
           <TBody>
             {
-                            receivers?.map(receiver => {
-                              return (
-                                <Tr key={receiver.id} >
-                                  <Td>{receiver.name}</Td>
-                                  <Td className='flex items-center space-x-2'>
-                                    <BsWhatsapp/>
-                                    <span>
-                                      {formataCelular(receiver.number)}
-                                    </span>
-                                  </Td>
-                                  <td className='space-x-2'>
-                                    {
-                                                receiver.events.map(event => {
-                                                  return (
-                                                    <Badge key={event.id}>{event.code}</Badge>
-                                                  )
-                                                })
-                                            }
-                                  </td>
-                                  <Td className='flex justify-center space-x-4'>
-                                    <button className='p-2 rounded hover:bg-blue-100' onClick={() => setEditReceiver(receiver)}>
-                                      <AiOutlineEdit/>
-                                    </button>
-                                    <TrashButton useMutation={() => useDestroyReceiver(receiver.id)}/>
-                                  </Td>
-                                </Tr>
-                              )
-                            })
-                        }
+              receiversPayload?.receivers.map(receiver => {
+                return (
+                  <Tr key={receiver.id} >
+                    <Td>{receiver.name}</Td>
+                    <Td className='flex items-center space-x-2'>
+                      <BsWhatsapp/>
+                      <span>
+                        {formataCelular(receiver.number)}
+                      </span>
+                    </Td>
+                    <td className='space-x-2'>
+                      {
+                                  receiver.events.map(event => {
+                                    return (
+                                      <Badge key={event.id}>{event.code}</Badge>
+                                    )
+                                  })
+                              }
+                    </td>
+                    <Td className='flex justify-center space-x-4'>
+                      <button className='p-2 rounded hover:bg-blue-100' onClick={() => setEditReceiver(receiver)}>
+                        <AiOutlineEdit/>
+                      </button>
+                      <TrashButton useMutation={() => useDestroyReceiver(receiver.id)}/>
+                    </Td>
+                  </Tr>
+                )
+              })
+            }
           </TBody>
         </Table>
       </div>

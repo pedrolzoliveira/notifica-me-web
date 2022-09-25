@@ -1,5 +1,4 @@
-import { AxiosResponse } from 'axios'
-import { API } from './api'
+import { API, NotificaMeResponse } from './api'
 
 interface Receiver {
   id: string
@@ -16,26 +15,36 @@ interface Receiver {
 
 export async function findAll() {
   const response = await API.get<{
-    receivers: Receiver[]
+    ok: boolean
+    message: string
+    payload: {
+      receivers: Receiver[]
+    }
   }>('/receivers')
-  return response.data.receivers
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 export async function find(id: string) {
   const response = await API.get<{
-    receiver: {
-      id: string
-      customerId: string
-      name: string
-      number: string
-      messenger: 'whatsapp' | 'telegram' | 'sms'
-      events: Array<{
-        eventCode: string
-        receiverId: string
-      }>
+    ok: boolean
+    message: string
+    payload: {
+      receiver: {
+        id: string
+        customerId: string
+        name: string
+        number: string
+        messenger: 'whatsapp' | 'telegram' | 'sms'
+        events: Array<{
+          eventCode: string
+          receiverId: string
+        }>
+      }
     }
   }>(`/receivers?id=${id}`)
-  return response.data.receiver
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 interface createParams {
@@ -45,10 +54,11 @@ interface createParams {
 }
 
 export async function create(params: createParams) {
-  const response = await API.post<typeof params, AxiosResponse<{
+  const response = await API.post<typeof params, NotificaMeResponse<{
     receiver: Omit<Receiver, 'events'>
   }>>('/receivers', params)
-  return response.data.receiver
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
 
 interface destroyParams {
@@ -59,7 +69,7 @@ export async function destroy(params: destroyParams) {
   const response = await API.delete('/receivers', {
     data: params
   })
-  return response.status === 200
+  return response.data.ok
 }
 
 interface updateParams {
@@ -68,7 +78,7 @@ interface updateParams {
   events: string[]
 }
 export async function update(params: updateParams) {
-  const response = await API.put<typeof params, AxiosResponse<{
+  const response = await API.put<typeof params, NotificaMeResponse<{
     receiver: {
       id: string
       customerId: string
@@ -81,5 +91,6 @@ export async function update(params: updateParams) {
       }>
     }
   }>>('/receivers', params)
-  return response.data.receiver
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
 }
