@@ -31,7 +31,7 @@ export const SignUp = () => {
     }
   }
 
-  if (infoPayload != null) {
+  if (infoPayload?.customer != null) {
     router.push('/')
   }
 
