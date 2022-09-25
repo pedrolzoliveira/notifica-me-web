@@ -26,7 +26,7 @@ export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps)
   if (receiver == null) return null
 
   const { mutateAsync: update, isLoading, error } = useUpdateReceiver(receiver.id)
-  const { data: eventTypes, isLoading: eventTypeLoading } = useEventTypes()
+  const { data: eventTypesPayload, isLoading: eventTypeLoading } = useEventTypes()
 
   const [name, setName] = useState(receiver.name)
   const [events, setevents] = useState(receiver.events.map(event => event.code))
@@ -86,7 +86,7 @@ export const EditReceiverModal = ({ receiver, onClose }: EditReceiverModalProps)
                   : null
               }
               {
-                eventTypes?.map(event => {
+                eventTypesPayload?.eventTypes.map(event => {
                   return (
                     <div className='flex items-center space-x-2' key={event.code}>
                       <input type='checkbox' checked={events.includes(event.code)} onChange={e => {
