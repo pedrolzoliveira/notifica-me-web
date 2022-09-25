@@ -68,7 +68,7 @@ export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
           </div>
           <div className="pt-4">
@@ -78,7 +78,7 @@ export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               />
           </div>
           <div>
@@ -122,7 +122,7 @@ export const EditPlanModal = ({ plan, onClose }: EditPlanModalProps) => {
             allowNegativeValue={false}
             defaultValue={PRICE_DEFAULT_VALUE / 100}
             placeholder="R$"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
           </div>
           <div className="space-x-4 w-full flex pt-4">
