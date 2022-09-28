@@ -4,14 +4,7 @@ import { Table, THead, TBody, Tr, Td, Th } from '../../components/Table'
 import { CreateCredentialModal } from '../../components/modals/create-credential-modal'
 import { useCredentials, useDestroyCredential } from '../../hooks/credentials-hooks'
 import { TrashButton } from '../../components/TrashButton'
-
-export interface KeyShowerProps {
-  key_: string
-}
-const KeyShower = ({ key_ }: KeyShowerProps) => {
-  const [show, setShow] = useState(false)
-  return <input className='w-full' type={`${show ? 'text' : 'password'}`} value={key_} onClick={e => setShow(!show)}/>
-}
+import { KeyShower } from '../../components/KeyShower'
 
 const Credential = () => {
   const [createModalOpen, setCreateModalOpen] = useState(false)
