@@ -12,7 +12,7 @@ export const KeyShower = ({ key_ }: KeyShowerProps) => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(key_)
-    toast.success('Senha Copiada')
+    toast.success('Chave Copiada')
   }
 
   return (
