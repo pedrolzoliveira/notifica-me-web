@@ -13,7 +13,8 @@ export const SideBar = () => {
   if (
     [
       '/signin',
-      '/signup'
+      '/signup',
+      '/marketplace'
     ].includes(router.pathname)
   ) return null
 
