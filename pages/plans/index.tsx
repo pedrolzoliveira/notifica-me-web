@@ -3,15 +3,17 @@ import { Badge } from '../../components/Badge'
 import { Table, TBody, Td, Th, THead, Tr } from '../../components/Table'
 import { Button } from '../../components/Button'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { useRouter } from 'next/router'
 
 const Plans = () => {
+  const router = useRouter()
   const { data: payload, isLoading } = useMyPlans()
 
   return (
     <div className='p-4 w-full h-full space-y-4'>
       <div className='flex justify-between mb-4'>
         <h1 className='font-bold text-lg'>Meus Planos</h1>
-        <Button>Mais planos</Button>
+        <Button onClick={async e => await router.push('/marketplace')}>Mais planos</Button>
       </div>
       {
         isLoading
