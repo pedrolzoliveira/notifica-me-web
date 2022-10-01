@@ -71,12 +71,12 @@ const Receivers = () => {
                     </Td>
                     <td className='space-x-2'>
                       {
-                                  receiver.events.map(event => {
-                                    return (
-                                      <Badge key={event.id}>{event.code}</Badge>
-                                    )
-                                  })
-                              }
+                      receiver.events.map(event => {
+                        return (
+                          <Badge key={event.id}>{event.code}</Badge>
+                        )
+                      })
+                      }
                     </td>
                     <Td className='flex justify-center space-x-4'>
                       <button className='p-2 rounded hover:bg-blue-100' onClick={() => setEditReceiver(receiver)}>
