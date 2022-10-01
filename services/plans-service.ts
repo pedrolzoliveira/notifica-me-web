@@ -95,3 +95,27 @@ export async function update(params: updateParams) {
   if (!response.data.ok) throw new Error(response.data.message)
   return response.data.payload
 }
+
+export async function myPlans() {
+  const response = await API.get<{
+    ok: boolean
+    message: string
+    payload: {
+      plans: Array<{
+        id: string
+        name: string
+        description: string
+        price: number
+        createdAt: string
+        updatedAt: string
+        events: Array<{
+          code: string
+          name: string
+          description: string
+        }>
+      }>
+    }
+  }>('/plans/my-plans')
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
+}

@@ -1,25 +1,43 @@
-import { ServicePack } from '../../components/service-pack'
-import { usePlans } from '../../hooks/plans-hooks'
+import { useMyPlans } from '../../hooks/plans-hooks'
+import { Badge } from '../../components/Badge'
+import { Table, TBody, Td, Th, THead, Tr } from '../../components/Table'
+import { Button } from '../../components/Button'
 
-const Services = () => {
-  const { data: payload } = usePlans()
+const Plans = () => {
+  const { data: payload } = useMyPlans()
 
   return (
-    <div className='grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 w-full'>
-      {
-        payload?.plans.map(plan => {
-          return <ServicePack key={plan.id} data={{
-            id: plan.id,
-            name: plan.name,
-            description: plan.description,
-            price: plan.price,
-            events: plan.events.map(event => event.name)
-          }}
-            />
-        })
-      }
+    <div className='p-4 w-full h-full space-y-4'>
+      <div className='flex justify-between mb-4'>
+        <h1 className='font-bold text-lg'>Meus planos</h1>
+        <Button>Mais planos</Button>
+      </div>
+      <Table>
+        <THead>
+          <tr>
+            <Th className='w-28'>Nome</Th>
+            <Th>Eventos</Th>
+          </tr>
+        </THead>
+        <TBody>
+          {
+            payload?.plans.map(plan => {
+              return (
+                <Tr key={plan.id}>
+                  <Td>{plan.name}</Td>
+                  <Td className='space-x-1'>
+                    {
+                    plan.events.map(event => <Badge key={event.code}>{event.code}</Badge>)
+                  }
+                  </Td>
+                </Tr>
+              )
+            })
+          }
+        </TBody>
+      </Table>
     </div>
   )
 }
 
-export default Services
+export default Plans
