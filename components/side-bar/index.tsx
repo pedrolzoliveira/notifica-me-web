@@ -1,7 +1,6 @@
 import { OptionSideBar } from './OptionSideBar'
 import { BsFillGridFill, BsFillBellFill, BsFillPeopleFill } from 'react-icons/bs'
 import { BiMessageDetail } from 'react-icons/bi'
-import { FiHome } from 'react-icons/fi'
 import { FaRegIdCard } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 import { useInfo } from '../../hooks/auth-hooks'
