@@ -9,7 +9,7 @@ const Plans = () => {
   return (
     <div className='p-4 w-full h-full space-y-4'>
       <div className='flex justify-between mb-4'>
-        <h1 className='font-bold text-lg'>Meus planos</h1>
+        <h1 className='font-bold text-lg'>Meus Planos</h1>
         <Button>Mais planos</Button>
       </div>
       <Table>
