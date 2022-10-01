@@ -2,9 +2,10 @@ import { useMyPlans } from '../../hooks/plans-hooks'
 import { Badge } from '../../components/Badge'
 import { Table, TBody, Td, Th, THead, Tr } from '../../components/Table'
 import { Button } from '../../components/Button'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 const Plans = () => {
-  const { data: payload } = useMyPlans()
+  const { data: payload, isLoading } = useMyPlans()
 
   return (
     <div className='p-4 w-full h-full space-y-4'>
@@ -12,16 +13,19 @@ const Plans = () => {
         <h1 className='font-bold text-lg'>Meus Planos</h1>
         <Button>Mais planos</Button>
       </div>
-      <Table>
-        <THead>
-          <tr>
-            <Th className='w-28'>Nome</Th>
-            <Th className='2-28'>Descrição</Th>
-            <Th>Eventos</Th>
-          </tr>
-        </THead>
-        <TBody>
-          {
+      {
+        isLoading
+          ? <AiOutlineLoading3Quarters className='animate-spin w-full'/>
+          : <Table>
+            <THead>
+              <tr>
+                <Th className='w-28'>Nome</Th>
+                <Th className='2-28'>Descrição</Th>
+                <Th>Eventos</Th>
+              </tr>
+            </THead>
+            <TBody>
+              {
             payload?.plans.map(plan => {
               return (
                 <Tr key={plan.id}>
@@ -36,8 +40,9 @@ const Plans = () => {
               )
             })
           }
-        </TBody>
-      </Table>
+            </TBody>
+          </Table>
+      }
     </div>
   )
 }
