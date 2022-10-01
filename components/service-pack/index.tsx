@@ -24,7 +24,7 @@ export const ServicePack = ({ data }: ServicePackProps) => {
         {
               (data.events.length > 0)
                 ? <>
-                  <p>Eventos Cadastrados:</p>
+                  <p>Eventos:</p>
                   <ul className="list-disc ml-8">
                     {
                     data.events.map(event => {
