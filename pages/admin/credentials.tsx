@@ -31,7 +31,7 @@ const Credential = () => {
             payload?.credentials.map(credential => {
               return (
                 <Tr key={credential.id}>
-                  <Td>{credential.eventCode}</Td>
+                  <Td className='font-semibold'>{credential.eventCode}</Td>
                   <Td>{credential.name}</Td>
                   <Td><KeyShower key_={credential.key}/></Td>
                   <Td>{new Date(credential.createdAt).toLocaleDateString()}</Td>
