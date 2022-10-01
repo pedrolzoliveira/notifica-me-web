@@ -16,6 +16,7 @@ const Plans = () => {
         <THead>
           <tr>
             <Th className='w-28'>Nome</Th>
+            <Th className='2-28'>Descrição</Th>
             <Th>Eventos</Th>
           </tr>
         </THead>
@@ -25,6 +26,7 @@ const Plans = () => {
               return (
                 <Tr key={plan.id}>
                   <Td>{plan.name}</Td>
+                  <Td>{plan.description}</Td>
                   <Td className='space-x-1'>
                     {
                     plan.events.map(event => <Badge key={event.code}>{event.code}</Badge>)
