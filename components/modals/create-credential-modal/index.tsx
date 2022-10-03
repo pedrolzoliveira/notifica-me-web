@@ -20,11 +20,6 @@ export const CreateCredentialModal = ({ open, onClose }: CreateCredentialModalPr
   const [code, setCode] = useState(CODE_DEFAULT_VALUE)
   const [name, setName] = useState(NAME_DEFAULT_VALUE)
 
-  // const handleCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const newCode = e.target.value.replace(/\s/g, '')
-  //   setCode(newCode)
-  // }
-
   const handleClose = () => {
     setCode(CODE_DEFAULT_VALUE)
     setName(NAME_DEFAULT_VALUE)

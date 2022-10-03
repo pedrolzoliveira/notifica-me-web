@@ -119,3 +119,27 @@ export async function myPlans() {
   if (!response.data.ok) throw new Error(response.data.message)
   return response.data.payload
 }
+
+export async function searchPlans(q: string) {
+  const response = await API.get<{
+    ok: boolean
+    message: string
+    payload: {
+      plans: Array<{
+        id: string
+        name: string
+        description: string
+        price: number
+        createdAt: string
+        updatedAt: string
+        events: Array<{
+          code: string
+          name: string
+          description: string
+        }>
+      }>
+    }
+  }>(`/plans?q=${q}`)
+  if (!response.data.ok) throw new Error(response.data.message)
+  return response.data.payload
+}

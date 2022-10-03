@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient, useMutation } from 'react-query'
-import { create, find, findAll, update, destroy, myPlans } from '../services/plans-service'
+import { create, find, findAll, update, destroy, myPlans, searchPlans } from '../services/plans-service'
 
 export function usePlans() {
   return useQuery('plans', findAll)
@@ -43,4 +43,8 @@ export function useDestroyPlan(id: string) {
       queryClient.invalidateQueries(['plans'])
     }
   })
+}
+
+export function useSearchPlans(q: string) {
+  return useQuery(`search-plans-${q}`, async () => await searchPlans(q))
 }
