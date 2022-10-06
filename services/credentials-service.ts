@@ -1,3 +1,4 @@
+import { Credential } from '../types/credential'
 import { API, NotificaMeResponse } from './api'
 
 export interface CreateParams {
@@ -7,13 +8,7 @@ export interface CreateParams {
 
 export async function create(params: CreateParams) {
   const response = await API.post<typeof params, NotificaMeResponse<{
-    credential: {
-      id: string
-      name: string
-      key: string
-      createdAt: string
-      eventCode: string
-    }
+    credential: Credential
   }>>('/credentials', params)
   if (!response.data.ok) throw new Error(response.data.message)
   return response.data.payload
@@ -24,13 +19,7 @@ export async function findAll() {
     ok: boolean
     message: string
     payload: {
-      credentials: Array<{
-        id: string
-        name: string
-        key: string
-        createdAt: string
-        eventCode: string
-      }>
+      credentials: Credential[]
     }
   }>('/credentials')
   if (!response.data.ok) throw new Error(response.data.message)

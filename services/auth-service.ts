@@ -1,3 +1,5 @@
+import { Admin } from '../types/admin'
+import { Customer } from '../types/customer'
 import { API, NotificaMeResponse } from './api'
 
 interface signInParams {
@@ -24,11 +26,7 @@ interface signUpParamsAdmin {
 
 export async function signIn(data: signInParams) {
   const response = await API.post<typeof data, NotificaMeResponse<{
-    customer: {
-      id: string
-      email: string
-      name: string
-    }
+    customer: Customer
   }>>('/auth/signin', data)
   if (!response.data.ok) throw new Error(response.data.message)
   return response.data.payload
@@ -36,11 +34,7 @@ export async function signIn(data: signInParams) {
 
 export async function SignUp(data: signUpParams) {
   const response = await API.post<typeof data, NotificaMeResponse<{
-    customer: {
-      id: string
-      email: string
-      name: string
-    }
+    customer: Customer
   }>>('/auth/signup', data)
   if (response.data.ok) throw new Error('SignUp error')
   return response.data.payload
@@ -48,11 +42,7 @@ export async function SignUp(data: signUpParams) {
 
 export async function signInAdmin(data: signInParamsAdmin) {
   const response = await API.post<typeof data, NotificaMeResponse<{
-    admin: {
-      id: string
-      email: string
-      name: string
-    }
+    admin: Admin
   }>>('/auth/admin/signin', data)
   if (!response.data.ok) throw new Error(response.data.message)
   return response.data.payload
@@ -60,11 +50,7 @@ export async function signInAdmin(data: signInParamsAdmin) {
 
 export async function SignUpAdmin(data: signUpParamsAdmin) {
   const response = await API.post<typeof data, NotificaMeResponse<{
-    admin: {
-      id: string
-      email: string
-      name: string
-    }
+    admin: Admin
   }>>('/auth/admin/signup', data)
   if (!response.data.ok) throw new Error(response.data.message)
   return response.data.payload
@@ -75,16 +61,8 @@ export async function info() {
     ok: boolean
     message: string
     payload: {
-      customer?: {
-        id: string
-        name: string
-        email: string
-      }
-      admin?: {
-        id: string
-        name: string
-        email: string
-      }
+      customer?: Customer
+      admin?: Admin
     }
   }>('/auth/info')
   if (!response.data.ok) throw new Error(response.data.message)

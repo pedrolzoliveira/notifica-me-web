@@ -1,3 +1,4 @@
+import { EventType } from '../types/event-type'
 import { API, NotificaMeResponse } from './api'
 
 export async function findAll() {
@@ -5,13 +6,7 @@ export async function findAll() {
     ok: boolean
     message: string
     payload: {
-      eventTypes: Array<{
-        code: string
-        name: string
-        description?: string
-        createdAt: string
-        updatedAt: string
-      }>
+      eventTypes: EventType[]
     }
   }>('/event-types')
   if (!response.data.ok) throw new Error(response.data.message)
@@ -23,13 +18,7 @@ export async function find(code: string) {
     ok: boolean
     message: string
     payload: {
-      eventType: {
-        code: string
-        name: string
-        description?: string
-        createdAt: string
-        updatedAt: string
-      }
+      eventType: EventType
     }
   }>(`/event-types?code=${code}`)
   if (!response.data.ok) throw new Error(response.data.message)
@@ -44,13 +33,7 @@ interface createParams {
 
 export async function create(params: createParams) {
   const response = await API.post<typeof params, NotificaMeResponse<{
-    eventType: {
-      code: string
-      name: string
-      description?: string
-      createdAt: string
-      updatedAt: string
-    }
+    eventType: EventType
   }>>('/event-types', params)
   if (!response.data.ok) throw new Error(response.data.message)
   return response.data.payload
@@ -73,13 +56,7 @@ interface updateParams {
 }
 export async function update(params: updateParams) {
   const response = await API.put<typeof params, NotificaMeResponse<{
-    eventType: {
-      code: string
-      name: string
-      description?: string
-      createdAt: string
-      updatedAt: string
-    }
+    eventType: EventType
   }>>('/event-types', params)
   if (!response.data.ok) throw new Error(response.data.message)
   return response.data.payload

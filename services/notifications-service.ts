@@ -1,3 +1,4 @@
+import { Notification } from '../types/notification'
 import { API } from './api'
 
 export async function findAll() {
@@ -5,22 +6,7 @@ export async function findAll() {
     ok: boolean
     message: string
     payload: {
-      notifications: Array<{
-        event: {
-          id: string
-          code: string
-          text: string
-          createdAt: string
-        }
-        receiver: {
-          id: string
-          name: string
-          customerId: string
-          number: string
-          messenger: 'whatsapp' | 'telegram' | 'sms'
-        }
-        createdAt: string
-      }>
+      notifications: Notification[]
     }
   }>('/notifications')
   if (!response.data.ok) throw new Error(response.data.message)

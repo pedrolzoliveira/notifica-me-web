@@ -1,3 +1,4 @@
+import { Plan } from '../types/Plan'
 import { API, NotificaMeResponse } from './api'
 
 export async function find(id: string) {
@@ -5,14 +6,7 @@ export async function find(id: string) {
     ok: boolean
     message: string
     payload: {
-      plan: {
-        id: string
-        name: string
-        description: string
-        price: number
-        createdAt: string
-        updatedAt: string
-      }
+      plan: Plan
     }
   }>(`/plans?id=${id}`)
   if (!response.data.ok) throw new Error(response.data.message)
@@ -24,19 +18,7 @@ export async function findAll() {
     ok: boolean
     message: string
     payload: {
-      plans: Array<{
-        id: string
-        name: string
-        description: string
-        price: number
-        createdAt: string
-        updatedAt: string
-        events: Array<{
-          code: string
-          name: string
-          description: string
-        }>
-      }>
+      plans: Plan[]
     }
   }>('/plans')
   if (!response.data.ok) throw new Error(response.data.message)
@@ -51,14 +33,7 @@ interface createParams {
 }
 export async function create(params: createParams) {
   const response = await API.post<typeof params, NotificaMeResponse<{
-    plan: {
-      id: string
-      name: string
-      description: string
-      price: number
-      createdAt: string
-      updatedAt: string
-    }
+    plan: Plan
   }>>('/plans', params)
   if (!response.data.ok) throw new Error(response.data.message)
   return response.data.payload
@@ -80,17 +55,7 @@ interface updateParams {
 }
 export async function update(params: updateParams) {
   const response = await API.put<typeof params, NotificaMeResponse<{
-    plan: {
-      id: string
-      name: string
-      description: string
-      price: number
-      events: Array<{
-        code: string
-      }>
-      createdAt: string
-      updatedAt: string
-    }
+    plan: Plan
   }>>('/plans', params)
   if (!response.data.ok) throw new Error(response.data.message)
   return response.data.payload
@@ -101,19 +66,7 @@ export async function myPlans() {
     ok: boolean
     message: string
     payload: {
-      plans: Array<{
-        id: string
-        name: string
-        description: string
-        price: number
-        createdAt: string
-        updatedAt: string
-        events: Array<{
-          code: string
-          name: string
-          description: string
-        }>
-      }>
+      plans: Plan[]
     }
   }>('/plans/my-plans')
   if (!response.data.ok) throw new Error(response.data.message)
@@ -125,19 +78,7 @@ export async function searchPlans(q: string) {
     ok: boolean
     message: string
     payload: {
-      plans: Array<{
-        id: string
-        name: string
-        description: string
-        price: number
-        createdAt: string
-        updatedAt: string
-        events: Array<{
-          code: string
-          name: string
-          description: string
-        }>
-      }>
+      plans: Plan[]
     }
   }>(`/plans?q=${q}`)
   if (!response.data.ok) throw new Error(response.data.message)

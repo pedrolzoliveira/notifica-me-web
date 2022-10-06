@@ -1,17 +1,5 @@
 import { API, NotificaMeResponse } from './api'
-
-interface Receiver {
-  id: string
-  customerId: string
-  name: string
-  number: string
-  messenger: 'whatsapp' | 'telegram' | 'sms'
-  events: Array<{
-    id: string
-    code: string
-    receiverId: string
-  }>
-}
+import { Receiver } from '../types/receivers'
 
 export async function findAll() {
   const response = await API.get<{
@@ -30,17 +18,7 @@ export async function find(id: string) {
     ok: boolean
     message: string
     payload: {
-      receiver: {
-        id: string
-        customerId: string
-        name: string
-        number: string
-        messenger: 'whatsapp' | 'telegram' | 'sms'
-        events: Array<{
-          eventCode: string
-          receiverId: string
-        }>
-      }
+      receiver: Receiver
     }
   }>(`/receivers?id=${id}`)
   if (!response.data.ok) throw new Error(response.data.message)
@@ -79,17 +57,7 @@ interface updateParams {
 }
 export async function update(params: updateParams) {
   const response = await API.put<typeof params, NotificaMeResponse<{
-    receiver: {
-      id: string
-      customerId: string
-      number: string
-      name: string
-      messenger: 'whatsapp' | 'telegram' | 'sms'
-      events: Array<{
-        eventCode: string
-        receiverId: string
-      }>
-    }
+    receiver: Receiver
   }>>('/receivers', params)
   if (!response.data.ok) throw new Error(response.data.message)
   return response.data.payload
